@@ -1,0 +1,68 @@
+/*
+ * Main theme css
+ * By: Louis <louis@ne02ptzero.me>
+*/
+
+body, html, #container {
+	margin: 0 !important;
+	padding: 0 !important;
+	height: 100%;
+	width: 100%;
+}
+
+body {
+}
+
+#content {
+	min-height: 95%;
+}
+
+#main {
+	background: #bdc3c7;
+	margin-left: 16px;
+	margin-right: 16px;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	height: 100%;
+	padding: 0 2%;
+}
+
+.oneHundred {
+	width: 100%;
+	margin: 0;
+}
+
+.notify {
+	margin-left: 16px;
+	margin-right: 16px;
+	font-size: 1.6em;
+	color: white;
+	padding-left: 5%;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+
+.notify span {
+	margin-right: 2%;
+}
+
+.notify div {
+	display: inline;
+	margin-top: -20px;
+}
+
+.notify-good {
+	background: #2ecc71;
+}
+
+.notify-good span {
+	color: #27ae60;
+}
+
+.notify-bad {
+	background: #e74c3c;
+}
+
+.notify-bad span {
+	color: #c0392b;
+}
