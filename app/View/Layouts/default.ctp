@@ -28,15 +28,20 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	<?php
 		echo $this->Html->meta('icon');
 
-		// Flat UI
-			echo $this->Html->css('bootstrap.min');
-			echo $this->Html->css('flat-ui.min');
-			echo $this->Html->script('jquery.min');
-			echo $this->Html->script('flat-ui');
+		/* CSS DECLARATION */
+			echo $this->Html->css(array(
+				'bootstrap.min',
+				'flat-ui.min',
+				'main',
+				'Infos'
+			));
 
-		// Theme
-			echo $this->Html->css('main');
-			echo $this->Html->script('main');
+		/* JS DECLARATION */
+			echo $this->Html->script(array(
+				'jquery.min',
+				'flat-ui',
+				'main'
+			));
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -76,7 +81,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="/ec/infos/git">
 								A propos <span class="fui-link"></span>
 							</a>
 						<li>

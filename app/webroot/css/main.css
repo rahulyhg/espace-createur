@@ -1,82 +1,96 @@
-/*
+/**
  * Main theme css
  * By: Louis <louis@ne02ptzero.me>
-*/
+ */
 
-body, html, #container {
-	margin: 0 !important;
-	padding: 0 !important;
-	height: 100%;
-	width: 100%;
-}
+/************************/
+/* Globals Declarations */
+/************************/
 
-body {
-}
+	body, html, #container {
+		margin: 0 !important;
+		padding: 0 !important;
+		height: 100%;
+		width: 100%;
+	}
 
-#content {
-	min-height: 95%;
-}
+	#content {
+		height: 95%;
+	}
 
-#main {
-	background: #bdc3c7;
-	margin-left: 16px;
-	margin-right: 16px;
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
-	height: 100%;
-	padding: 0 2%;
-}
+	#main {
+		background: #bdc3c7;
+		margin-left: 16px;
+		margin-right: 16px;
+		border-top-left-radius: 15px;
+		border-top-right-radius: 15px;
+		height: 100%;
+		padding: 0 2%;
+	}
 
-.oneHundred {
-	width: 100%;
-	margin: 0;
-}
+	.oneHundred {
+		width: 100%;
+		margin: 0;
+	}
 
-.notify {
-	margin-left: 16px;
-	margin-right: 16px;
-	font-size: 1.6em;
-	color: white;
-	padding-left: 5%;
-	border-bottom-left-radius: 15px;
-	border-bottom-right-radius: 15px;
-}
+/*****************/
+/* Notifications */
+/*****************/
 
-.notify span {
-	margin-right: 2%;
-}
+	.notify {
+		margin-left: 16px;
+		margin-right: 16px;
+		font-size: 1.6em;
+		color: white;
+		padding-left: 5%;
+		border-bottom-left-radius: 15px;
+		border-bottom-right-radius: 15px;
+	}
 
-.notify div {
-	display: inline;
-	margin-top: -20px;
-}
+	.notify span {
+		margin-right: 2%;
+	}
 
-.notify-good {
-	background: #2ecc71;
-}
+	.notify div {
+		display: inline;
+		margin-top: -20px;
+	}
 
-.notify-good span {
-	color: #27ae60;
-}
+	.notify-good {
+		background: #2ecc71;
+	}
 
-.notify-bad {
-	background: #e74c3c;
-}
+	.notify-good span {
+		color: #27ae60;
+	}
 
-.notify-bad span {
-	color: #c0392b;
-}
+	.notify-bad {
+		background: #e74c3c;
+	}
 
-.content_spe {
-	margin-left: 20%;
-	margin-right: 20%;
-	padding-top: 8%;
-}
+	.notify-bad span {
+		color: #c0392b;
+	}
 
-.content_spe .spe_title {
-	margin-bottom: 5%;
-}
+/*************************/
+/* Content Without Login */
+/*************************/
 
-.content_spe h1 {
-	text-align: center;
-}
+	.content_spe {
+		margin-left: 20%;
+		margin-right: 20%;
+		padding-top: 5%;
+		height: 70% !important;
+	}
+
+	.content_spe .spe_title {
+		margin-bottom: 5%;
+	}
+
+	.content_spe #main {
+		overflow: scroll;
+	}
+
+	.content_spe h1 {
+		text-align: center;
+	}

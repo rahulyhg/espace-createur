@@ -1,0 +1,27 @@
+/**
+ * Infos css
+ * By: Louis <louis@ne02ptzero.me>
+ */
+
+/***************/
+/* Action: git */
+/***************/
+
+	.infos_git {
+		text-align: center;
+		padding-top: 10%;
+	}
+
+	.infos_git h1 {
+		color: #2c3e50;
+	}
+
+	.infos_git .commit {
+		text-align: left;
+		margin-left: 35%;
+		margin-right: 30%;
+	}
+
+	.infos_git u {
+		margin-right: 2%;
+	}
