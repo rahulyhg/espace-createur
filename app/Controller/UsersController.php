@@ -8,6 +8,7 @@
 
 
 	App::uses('Security', 'Utility');
+	App::uses('AuthComponent', 'Controller/Component');
 	class UsersController extends AppController {
 		public function		index() {
 
@@ -32,6 +33,29 @@
 					}
 				}
 			}
+		}
+
+		/**
+		* Login function
+		* Template: Users/log_in.ctp
+		*/
+		public function		logIn() {
+			if ($this->request->is('post')) {
+				if ($this->Auth->login()) {
+					$this->User->id = $this->Auth->user('id');
+					$this->User->saveField('lastLoginDate', date(DATE_ATOM));
+					$this->Session->setFlash("Bienvenue ".$this->Auth->user('firstName')."!", 'default', array(), 'good');
+					$this->redirect('/');
+				} else {
+					$this->Session->setFlash("Merci de vérifier vos détails de connexion.", 'default', array(), 'bad');
+				}
+			}
+		}
+
+		public function		logOut() {
+			$this->Auth->logout();
+			$this->Session->setFlash("A la prochaine!", 'default', array(), 'good');
+			$this->redirect('/');
 		}
 	}
 

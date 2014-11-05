@@ -58,13 +58,17 @@
 			</div>
 			<div class="form-group">
 				<?php echo $this->Form->input('type', array(
-					"options" => array(1 => "Une créatrice", 2 => "Une Blogeuse"),
+					"options" => array(1 => "Une Créatrice", 2 => "Une Blogeuse"),
 					"class" => "select",
 					"label" => "Je suis...",
 					"data-toggle" => "select"
 				))
 				?>
 			</div>
+			<?php echo $this->Html->link("J'ai deja un compte !", array(
+				"controller" => "Users",
+				"action" => "logIn"
+			)) ?>
 			<div class="form-group">
 					<button type="submit" class="btn btn-primary oneHundred">S'inscrire !</button>
 			</div>

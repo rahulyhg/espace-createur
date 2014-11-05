@@ -66,3 +66,17 @@ body {
 .notify-bad span {
 	color: #c0392b;
 }
+
+.content_spe {
+	margin-left: 20%;
+	margin-right: 20%;
+	padding-top: 8%;
+}
+
+.content_spe .spe_title {
+	margin-bottom: 5%;
+}
+
+.content_spe h1 {
+	text-align: center;
+}
