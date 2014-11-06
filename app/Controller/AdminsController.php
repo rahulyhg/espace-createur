@@ -8,6 +8,7 @@
 	class AdminsController extends AppController {
 
 		public function		beforeFilter() {
+			parent::beforeFilter();
 			if (AuthComponent::user("type") != 0) {
 				$this->Session->setFlash("Vous cherchez quelque chose ?", 'default', array(), "bad");
 				$this->redirect('/');

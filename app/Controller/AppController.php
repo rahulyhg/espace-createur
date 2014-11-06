@@ -20,6 +20,10 @@
  */
 
 App::uses('Controller', 'Controller');
+/* External Libraries */
+	require_once APP."Vendor/php-github-api/vendor/autoload.php";
+	require_once APP."Vendor/magento-client-php/vendor/autoload.php";
+	require_once APP."Vendor/Api/Main.php";
 
 /**
  * Application Controller
@@ -56,5 +60,26 @@ class AppController extends Controller {
 		$this->Auth->userModel = 'User';
 		if ($this->RequestHandler->isAjax())
 			$this->layout = null;
+
+		/* Notifications count */
+		if (AuthComponent::user('type') == 0) {
+			$conditions = array(
+				"isAdmin" => 1,
+				"isRead" => 0
+			);
+		} else {
+			$conditions = array(
+				"userId" => AuthComponent::user('id'),
+				"isRead" => 0
+			);
+		}
+		if (AuthComponent::user('id') != 0) {
+			$this->loadModel('Notification');
+			$number = $this->Notification->find('count', array(
+				"conditions" => $conditions
+			));
+			$this->set('Notifications', $number);
+		}
 	}
+
 }

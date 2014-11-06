@@ -3,8 +3,6 @@
 	 * More Infos Controller
 	 * By: Louis <louis@ne02ptzero.me>
 	 */
-	require_once __DIR__."/php-github-api/vendor/autoload.php";
-
 
 	class InfosController extends AppController {
 		public function		git() {

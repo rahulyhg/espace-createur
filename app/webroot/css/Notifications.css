@@ -1,0 +1,25 @@
+/**
+ * Notifications style
+ * By: Louis <louis@ne02ptzero.me>
+ */
+
+/***************/
+/* View: index */
+/***************/
+
+	.notifications ul li {
+		margin-bottom: 5px;
+		border: 0;
+	}
+	
+	.notifications ul li a {
+		color: white;
+	}
+
+	.notifications ul .newUser {
+		background-color: #27ae60;
+	}
+	
+	.notifications ul .newProduct {
+		background-color: #2980b9;
+	}

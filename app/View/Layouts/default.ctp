@@ -34,7 +34,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				'flat-ui.min',
 				'main',
 				'Infos',
-				'Admins'
+				'Admins',
+				'Notifications'
 			));
 
 		/* JS DECLARATION */
@@ -73,6 +74,16 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						<li>
 							<a href="#">
 								Mes Ventes
+							</a>
+						</li>
+						<li>
+							<a href="/ec/Notifications">
+								Notifications
+								 <span class="navbar-new notification-count"><?php
+								 if (isset($Notifications))
+									 echo $Notifications;
+								 else
+								 	echo "0"; ?></span>
 							</a>
 						</li>
 					</ul>
