@@ -1,0 +1,21 @@
+/**
+ * Admin Panel Css
+ * By: Louis <louis@ne02ptzero.me>
+ */
+
+/**********************/
+/* action: addWebsite */
+/**********************/
+
+	.addWebsite .loading {
+		margin-left: 20px;
+		display: none;
+	}
+
+	.addWebsite .result {
+		display: none;
+	}
+
+	.ninja {
+		display: none;
+	}

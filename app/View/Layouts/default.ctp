@@ -33,14 +33,16 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				'bootstrap.min',
 				'flat-ui.min',
 				'main',
-				'Infos'
+				'Infos',
+				'Admins'
 			));
 
 		/* JS DECLARATION */
 			echo $this->Html->script(array(
 				'jquery.min',
 				'flat-ui',
-				'main'
+				'main',
+				'Admins'
 			));
 
 		echo $this->fetch('meta');
@@ -80,6 +82,13 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 								Mon Compte <span class="fui-user"></span>
 							</a>
 						</li>
+						<?php if (AuthComponent::user('type') == 0) { ?>
+						<li>
+							<a href='/ec/admins'>
+								Admin <span class="fui-gear"></span>
+							</a>
+						</li>
+						<?php } ?>
 						<li>
 							<a href="/ec/infos/git">
 								A propos <span class="fui-link"></span>
