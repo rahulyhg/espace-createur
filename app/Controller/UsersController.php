@@ -73,11 +73,43 @@
 			}
 		}
 
+		/**
+		 * LogOut function
+		 */
 		public function		logOut() {
 			$this->Auth->logout();
 			$this->Session->setFlash("A la prochaine!", 'default', array(), 'good');
 			$this->redirect('/');
 		}
+
+		/**
+		 * Delete User function
+		 */
+		public function		delete($id) {
+			if (AuthComponent::user('type') != 0) {
+				$this->Session->setFlash("Vous essayez de faire un truc là ?", 'default', array(), 'bad');
+				$this->redirect('/');
+			} else {
+				$this->User->delete($id);
+				$this->Session->setFlash("L'utilisateur à bien été supprimé.", 'default', array(), 'good');
+				$this->redirect($this->referer());
+			}
+		}
+
+		/**
+		 * Accept User function
+		 */
+		 public function	accept($id) {
+			if (AuthComponent::user('type') != 0) {
+				$this->Session->setFlash("Vous essayez de faire un truc là ?", 'default', array(), 'bad');
+				$this->redirect('/');
+			} else {
+				$this->User->id = $id;
+				$this->User->saveField('isConfirmed', 1);
+				$this->Session->setFlash("L'utilisateur a bien été accepté.", 'default', array(), 'good');
+				$this->redirect($this->referer());
+			}
+		 }
 	}
 
 ?>

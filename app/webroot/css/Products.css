@@ -1,0 +1,57 @@
+/**
+ * Products style
+ * By: Louis <louis@ne02ptzero.me>
+ */
+
+/***************/
+/* Action: add */
+/***************/
+
+	.addProduct .shortDescription {
+		display: none;
+	}
+
+/*****************/
+/* Action: index */
+/*****************/
+
+	.more {
+		float: right;
+		font-size: 2em;
+		color: white;
+		background: #27ae60;
+		padding: 0 1%;
+		border-radius: 80px;
+	}
+
+	.more a {
+		color: white !important;
+	}
+
+	.product_list {
+		width: 100%;
+	}
+
+	.product_list ul {
+		width: 100%;
+		list-style: none;
+	}
+
+	.product_list ul li {
+		width: 10%;
+		margin-right: 20px;
+		text-align: center;
+	}
+
+	.product_list ul li img {
+		width: auto;
+		height: 200px;
+	}
+
+	.product_list ul li h6 {
+		font-weight: bold;
+	}
+
+	.datFade {
+		display: none;
+	}

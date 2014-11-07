@@ -35,7 +35,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				'main',
 				'Infos',
 				'Admins',
-				'Notifications'
+				'Notifications',
+				'Products',
+				'//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'
 			));
 
 		/* JS DECLARATION */
@@ -43,7 +45,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				'jquery.min',
 				'flat-ui',
 				'main',
-				'Admins'
+				'Admins',
+				'Notifications',
+				'Products'
 			));
 
 		echo $this->fetch('meta');
@@ -77,7 +81,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							</a>
 						</li>
 						<li>
-							<a href="/ec/Notifications">
+							<a href="/ec/Notifications/index/read">
 								Notifications
 								 <span class="navbar-new notification-count"><?php
 								 if (isset($Notifications))
@@ -117,7 +121,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	<?php } else {
 			echo "<div id=\"content\" class='content_spe'>";
 			echo "<h1 class='spe_title'>Espace Créateurs</h1>";
-		} ?>
+		}
+		?>
 
 <?= $this->Session->flash(); ?>
 			<?php if (($message = $this->Session->flash('good'))) {
