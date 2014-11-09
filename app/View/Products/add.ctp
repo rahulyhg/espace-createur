@@ -26,7 +26,7 @@
 		</div>
 		<div class="form-group">
 				<label class='checkbox' for="checkbox">
-					<input class="custom-checkbox" checked="checked" value="" id="checkbox" data-toggle="checkbox" type="checkbox" name="data[add][useShortDescription]">
+					<input class="custom-checkbox useShortDescription" checked="checked" value="" id="checkbox" data-toggle="checkbox" type="checkbox" name="data[add][useShortDescription]">
 					<span class="icons">
 						<span class="icon-checked"></span>
 						<span class="icon-unchecked"></span>

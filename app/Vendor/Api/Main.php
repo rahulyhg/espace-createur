@@ -29,10 +29,10 @@
 		 * @param: array of the product
 		 */
 		 public function	addProduct($product) {
-			if ($this->_verifyProduct($product)) {
+			if (!($r = $this->_verifyProduct($product))) {
 				$this->_product = $product;
 			} else {
-				throw new Exception("Le produit est incomplet.");
+				throw new Exception("Le produit est incomplet: $r");
 			}
 		 }
 
@@ -58,13 +58,27 @@
 		  */
 		private function	_verifyProduct($product) {
 			$p = $product;
-			if (isset($p["description"]) && isset($p["shortDescription"]) &&
-				isset($p["name"]) && isset($p["ugs"]) && isset($p["weight"]) &&
-				isset($p["price"]) && isset($p["img"]) && isset($p["img"]) &&
-				isset($p["type"]) && isset($p["website"]) && isset($p["currentWebsite"]) &&
-				isset($p["userId"]) && isset($p["color"]) && isset($p["size"]) && $p["addDate"])
-				return TRUE;
-			return FALSE;
+			$error = false;
+			$key = array(
+				"description",
+				"shortDescription",
+				"name",
+				"ugs",
+				"weight",
+				"price",
+				"img",
+				"type",
+				"website",
+				"currentWebsite",
+				"userId",
+				"color",
+				"size"
+			);
+			foreach ($key as $k) {
+				if (!isset($product[$k]))
+					$error .= " $k";
+			}
+			return $error;
 		  }
 
 		/**
@@ -95,18 +109,18 @@
 			$this->_getMagentoClient();
 			$data = array(
 				"name" => $this->_product["name"],
-				"websites" => array(1),
+				"websites" => array(5),
 				"short_description" => $this->_product["shortDescription"],
 				"description" => $this->_product["description"],
 				"price" => $this->_product["price"],
 				"status" => 1,
 				"tax_class_id" => 0,
-				"url_key" => "test",
-				"url_path" => "test",
+				"url_key" => $this->_product["ugs"],
+				"url_path" => $this->_product["ugs"],
 				"visibility" => 4
 			);
 			$sku = $this->_product["ugs"];
-			$store = 1;
+			$store = "shop_view";
 			$attribute = 4;
 			$type = 'simple';
 			$this->_product["id"] = $this->_client->call('catalog_product.create', array($type, $attribute, $sku, $data, $store));

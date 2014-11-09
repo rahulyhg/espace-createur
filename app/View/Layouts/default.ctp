@@ -71,23 +71,31 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				<div class="collapse navbar-collapse" id="navbar-collapse-01">
 					<ul class="nav navbar-nav navbar-left">
 						<li>
-							<a href="#">
-								Mes produits
+							<a href="/ec/Products">
+							<?php if (AuthComponent::user('type') != 0) {
+										echo "Mes Créations";
+									} else {
+										echo "Créations"; } ?>
 							</a>
 						</li>
 						<li>
 							<a href="#">
-								Mes Ventes
+								<?php if (AuthComponent::user('type') != 0) {
+										echo "Mes Ventes";
+									} else {
+										echo "Ventes"; } ?>
 							</a>
 						</li>
 						<li>
 							<a href="/ec/Notifications/index/read">
 								Notifications
-								 <span class="navbar-new notification-count"><?php
-								 if (isset($Notifications))
-									 echo $Notifications;
-								 else
-								 	echo "0"; ?></span>
+								<?php
+								 if (isset($Notifications) && $Notifications != 0) {
+								 	echo '<span class="navbar-new notification-count">';
+									echo $Notifications; 
+									echo "</span>";
+								}
+								?>
 							</a>
 						</li>
 					</ul>

@@ -60,7 +60,7 @@
 		 * Add a Notification function
 		 * @param: Array of parameters
 		 */
-		 public function	add($param) {
+		 public function	addNotification($param) {
 		 	if (isset($param["additionnalInfo"])) {
 				$param["additionnalInfo"] = json_encode($param["additionnalInfo"]);
 			}
