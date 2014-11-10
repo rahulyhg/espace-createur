@@ -108,16 +108,68 @@
 		display: none;
 	}
 
-	.message {
+	.messageProducts {
 		width: 100%;
 		background: #16a085;
 		color: white;
 		padding-left: 50px;
 		padding-bottom: 10px;
 		margin-bottom: 5px;
-		display: none;
 	}
 
-	.message .fui-check {
+	.messageProducts .fui-check {
 		margin-right: 50px;
+	}
+
+/**************/
+/* View: edit */
+/**************/
+
+	.productEdit h5 span {
+		font-weight: normal;
+	}
+
+	.productEdit h5 span .fui-document {
+		color: #3498db;
+	}
+
+	.productEdit h5 span .fui-heart {
+		color: #e74c3c;
+	}
+
+	.productEdit h5 span .fui-check {
+		color: #27ae60;
+	}
+
+	.productEdit .form-group ul {
+		list-style: none;
+		width: 100%;
+	}
+	
+	.productEdit .form-group ul li {
+		display: inline-table;
+		width: 45%;
+		margin-right: 20px;
+	}
+	
+	.productEdit .form-group ul li .gotError label {
+		font-weight: bold;
+		background: #ecf0f1;
+		width: 100%;
+		border-left: 2px #1abc9c solid;
+		padding-left: 30px;
+	}
+
+	.productEdit .form-group img {
+		height: 300px;
+		width: auto;
+		margin-bottom: 20px;
+	}
+
+	.productEdit .form-group input[type="file"] {
+		padding-top: 0;
+	}
+
+	.productEdit .btn-success {
+		margin-bottom: 15px;
 	}

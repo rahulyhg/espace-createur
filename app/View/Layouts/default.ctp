@@ -34,6 +34,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				'flat-ui.min',
 				'main',
 				'Infos',
+				'Menus',
 				'Admins',
 				'Notifications',
 				'Products',
@@ -62,11 +63,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			<nav class="navbar navbar-inverse navbar-embossed" role="navigation">
 				<div class="navbar-header">
 					<button class="navbar-toggle" data-target="#navbar-collapse-01" data-toggle="collapse" type="button"></button>
-					<?php echo $this->Html->link("Espace Créateurs", array(
-						"action" => "index"),
-						array(
-							"class" => "navbar-brand"
-						)); ?>
+					<a href="/ec" class='navbar-brand'>Espace Créateurs</a>
 				</div>
 				<div class="collapse navbar-collapse" id="navbar-collapse-01">
 					<ul class="nav navbar-nav navbar-left">

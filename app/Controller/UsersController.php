@@ -9,14 +9,15 @@
 
 	App::uses('Security', 'Utility');
 	App::uses('AuthComponent', 'Controller/Component');
-	App::import('Controller', 'Notifications');
+	//App::import('Controller', 'Notifications');
 	class UsersController extends AppController {
 
 		private $_Notification;
+		public $uses = array("Notification", "User");
 
 		public function		beforeFilter() {
 			parent::beforeFilter();
-			$this->_Notification = new NotificationsController;
+			//$this->_Notification = new NotificationsController;
 		}
 
 		public function		index() {
@@ -38,13 +39,13 @@
 					$d['subscriptionDate'] = date("Y-m-d h:m:s");
 					if ($this->User->save($d, true, array("email", "firstName", "lastName", "password", "website", "type", "nickName", "subscriptionDate"))) {
 						$this->Session->setFlash("Votre inscription à bien été prise en compte !", 'default', array(), 'good');
-						$this->_Notification->add(array(
+						$this->Notification->save(array(
 							"type" => "new_user",
 							"userId" => 0,
 							"isAdmin" => 1,
-							"additionnalInfo" => array(
+							"additionnalInfo" => json_encode(array(
 								"userId" => $this->User->getLastInsertId()
-							)));
+							))));
 						$this->redirect("/");
 					}
 				}

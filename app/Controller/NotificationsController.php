@@ -6,7 +6,7 @@
 
 	 class		NotificationsController extends AppController {
 
-	 public $uses = array("User");
+	 public $uses = array("User", "Commentary", "Product");
 
 	 	/**
 		 * Index function
@@ -35,11 +35,58 @@
 		 * Template: Notifications/view.ctp
 		 */
 		 public function	view($id) {
+
 			$result = $this->Notification->find('all', array(
 				"conditions" => array(
 					"id" => $id
 				)
 			));
+
+		 /* Notification treatement */
+			if ($this->request->is('post')) {
+				$r = $result[0]["Notification"];
+				$d = $this->request->data;
+				if ($r["type"] == "newProduct" || $r["type"] == "updateProduct") {
+				$product = $this->Product->findById(json_decode($r["additionnalInfo"], true)["productId"]);
+					if (isset($d["go"])) {
+						$this->Product->id = $product["Product"]["id"];
+						$this->Product->saveField('status', 2);
+						$this->Session->setFlash("La Création a bien été accepté.", 'default', array(), "good");
+						$this->Notification->save(array(
+							"type" => "productAccepted",
+							"userId" => $product["Product"]["userId"],
+							"additionnalInfo" => json_encode(array(
+								"productId" => $product["Product"]["id"]
+							))
+						));
+						$this->Notification->id = $id;
+						$this->Notification->saveField('isDone', 1);
+						$this->redirect("/Notifications");
+					} else if (isset($d["change"])) {
+						foreach ($d["add"] as $k => $v) {
+							if ($v == "")
+								unset($d["add"][$k]);
+						}
+						$data = array(
+							"productId" => $product["Product"]["id"],
+							"userId" => AuthComponent::user('id'),
+							"additionnalInfo" => json_encode($d["add"])
+						);
+						$this->Commentary->save($data);
+						$this->Notification->save(array(
+							"type" => "productRefused",
+							"userId" => $product["Product"]["userId"],
+							"additionnalInfo" => json_encode(array(
+								"productId" => $product["Product"]["id"]
+							))
+						));
+						$this->Session->setFlash("Vos commentaires ont bien été pris en compte.", 'default', array(), "good");
+						$this->Notification->id = $id;
+						$this->Notification->saveField('isDone', 1);
+						$this->redirect("/Notifications");
+					}
+				}
+			}
 
 			// Mark as read
 			$this->Notification->id = $id;
@@ -52,6 +99,23 @@
 					)
 				));
 				$this->set("userInfo", $user);
+			} else if ($result[0]["Notification"]["type"] == "newProduct" || $result[0]["Notification"]["type"] == "updateProduct") {
+				$product = $this->Product->findById(json_decode($result[0]["Notification"]["additionnalInfo"], true)["productId"]);
+				$commentary = $this->Commentary->find('all', array(
+					"conditions" => array(
+						"productId" => json_decode($result[0]["Notification"]["additionnalInfo"], true)["productId"]
+					)
+				));
+				for ($i = 0; isset($commentary[$i]); $i++) {
+					$c = $commentary[$i]["Commentary"];
+					$this->User->id = $c["userId"];
+					$commentary[$i]["Commentary"]["userInfo"] = $this->User->nickName;
+				}
+				$this->set("product", $product);
+				$this->set("creator", $this->User->findById($product["Product"]["userId"]));
+				$this->set("commentary", $commentary);
+			} else if ($result[0]["Notification"]["type"] == "productRefused") {
+				$this->redirect("/Products/edit/".json_decode($result[0]["Notification"]["additionnalInfo"], true)["productId"]);
 			}
 			$this->set("result", $result);
 		 }

@@ -8,7 +8,7 @@
 	 class		ProductsController extends AppController {
 
 		private $_Notification;
-		public $uses = array('User', 'Product', 'Website');
+		public $uses = array('User', 'Product', 'Website', 'Commentary');
 
 		public function		beforeFilter() {
 			parent::beforeFilter();
@@ -35,14 +35,6 @@
 				$this->set('websites', $this->Website->find('all'));
 			}
 			$this->set("result", $result);
-   /*         $obj = new Api();*/
-			//$obj->setApiKeys(array(
-				//"url" => "http://team.emma-chloe.com/Fusiow/index.php",
-				//"apiKey" => "ne02ptzero",
-				//"apiSecret" => "password",
-				//"type" => 1
-			/*));*/
-			//$obj->addCreatorMagento("Fusiow");
 		}
 
 		/**
@@ -112,6 +104,58 @@
 					$this->redirect('/Products');
 				}
 			}
+		}
+
+		/**
+		 * Edit a Product
+		 * Template: Products/edit.ctp
+		 */
+		public function		edit($id) {
+			$p = $this->Product->findById($id);
+			if ($p["Product"]["userId"] != AuthComponent::user('id')) {
+					$this->Session->setFlash("Pardon ?", 'default', array(), 'bad');
+					$this->redirect('/Products');
+			}
+			if ($this->request->is('post')) {
+				$d = $this->request->data["edit"];
+				$data = array(
+					"description" => $d["description"],
+					"name" => $d["name"],
+					"price" => $d["price"]
+				);
+				if ($d["img"]["name"] != "") {
+					$file = $d["img"];
+					$path = $_SERVER['DOCUMENT_ROOT'] .'/ec/app/webroot/files/'.AuthComponent::user('id');
+					if (is_dir($path) == false)
+						mkdir($path);
+					move_uploaded_file($file['tmp_name'], $path."/".$file["name"]);
+					$data["img"] = json_encode(array(0 => $path."/".$file["name"]));
+				}
+				if (isset($d["shortDescription"]))
+					$data["shortDescription"] = $d["shortDescription"];
+				$this->Product->id = $id;
+				if ($this->Product->save($data)) {
+					$this->Notification->save(array(
+						"type" => "updateProduct",
+						"userId" => 0,
+						"isAdmin" => 1,
+						"additionnalInfo" => json_encode(array(
+							"productId" => $id
+						))
+					));
+					$this->Commentary->deleteAll(array("productId" => $id));
+					$this->Session->setFlash("Votre produit a bien été mise à jour.", 'default', array(), 'good');
+					$this->redirect("/Products");
+				}
+			}
+			$c = $this->Commentary->find('all', array(
+				"conditions" => array(
+					"productId" => $p["Product"]["id"]
+				)
+			));
+			if (isset($c[0]))
+				$this->set("comments", $c);
+			$this->set("product", $p);
 		}
 	 }
 ?>

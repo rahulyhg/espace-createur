@@ -28,3 +28,29 @@
 			}
 		});
 	}
+
+$(document).ready(function() {
+	var		count = 0;
+	/**
+	 * Commentary show
+	 */
+	$(".commentaryCheckbox input").on('change', function() {
+		var name = $(this).val();
+		console.log(".commentary" + name);
+		if (this.checked) {
+			$(".commentary" + name).hide(200);
+			count--;
+		} else {
+			$(".commentary" + name).show(200);
+			count++;
+		}
+		if (count == 0) {
+			$(".go").show(200);
+			$(".change").hide(200);
+		} else {
+			$(".go").hide(200);
+			$(".change").show(200);
+		}
+	});
+
+});

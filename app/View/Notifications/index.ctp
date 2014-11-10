@@ -24,6 +24,18 @@
 							$message = "Un créateur a ajouté un nouveau produit";
 							$class = "newProduct";
 						break;
+						case "productRefused";
+							$message = "Votre création a été refusée.";
+							$class = "productRefused";
+						break;
+						case "updateProduct":
+							$message = "Un créateur a mis à jour sa création !";
+							$class = "updateProduct";
+						break;
+						case "productAccepted":
+							$message = "Votre création a été acceptée !";
+							$class = "productAccepted";
+						break;
 					}
 				}
 			echo "<li class='list-group-item $class notification$n[id]'>";

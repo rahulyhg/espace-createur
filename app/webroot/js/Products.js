@@ -3,24 +3,23 @@
  * By: Louis <louis@ne02ptzero.me>
  */
 
+	var		websitesChecked = {};
 $(document).ready(function() {
 	// Check and Unchecked shortDescription
 	var		actualHover = 0;
 	var		actualHoverBox = 0;
 	var		actualText = 0;
 	var		boxChecked = {};
-	var		websitesChecked = {};
 
 	// Fixes on Flat-UI
 	$(".websites ul li").on('click', function() {
 		var className = $(this).attr('class');
 		var id = $(this).attr('name');
+		alert(id);
 		if (className == undefined || className == "") {
-			$(this).addClass("todo-done");
-			websitesChecked[id] = 1;
-		} else {
-			$(this).removeClass("todo-done");
 			delete websitesChecked[id];
+		} else {
+			websitesChecked[id] = 1;
 		}
 	});
 
@@ -38,7 +37,6 @@ $(document).ready(function() {
 		else
 			delete boxChecked[$(this).val()];
 		var v = Object.keys(boxChecked).length;
-		console.log(i + " || " + v);
 		if (i == 0 && v > 0) {
 			$(".delete").show(200);
 			$(".addWebsite").show(200);
@@ -75,34 +73,31 @@ $(document).ready(function() {
 	// Add to a website Action
 	$(".websites button").on('click', function() {
 		var i = 0, v = 1;
-		for (key in websitesChecked) {
 			for (key2 in boxChecked) {
 				i++;
 			}
-		}
-		$(".message").html("Ajouts des produits <span class='count'>0/"+i+"</span> <i class='fa fa-circle-o-notch fa-spin'></i>").show(200);
+		$(".messageProducts").html("Ajouts des produits <span class='count'>0/"+i+"</span> <i class='fa fa-circle-o-notch fa-spin'></i>").show(200);
 
-		for (key in websitesChecked) {
-			for (key2 in boxChecked) {
+		for (key2 in boxChecked) {
+			for (key in websitesChecked) {
 				$.ajax({
 					"url": "/ec/products/addwebsite/"+key2+"/"+key,
 					"async": false
 				});
-				$(".message .count").html(v + "/" + i);
-				v++;
+				$(".messageProducts .count").html(v + "/" + i);
 			}
+			v++;
 		}
-		$(".message").html("<span class='fui fui-check'></span> Termine !");
+		$(".messageProducts").html("<span class='fui fui-check'></span> Termine !");
 		$(".addWebsite").hide(200);
 		$(".websites").hide(200);
-		$(".message").delay(2000).hide(200);
 	});
 });
 
 $(window).load(function() {
 	var time;
 	$(".datFade").each(function(i) {
-		time = Math.floor(Math.random() * 1600) + 800;
-		$(this).delay(time).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
+		time = Math.floor(Math.random() * 100) + 300;
+		$(this).delay(time * i).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
 	});
 });

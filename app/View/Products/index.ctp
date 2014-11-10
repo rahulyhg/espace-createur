@@ -1,5 +1,4 @@
-<div class='message'>
-</div>
+<div class='messageProducts'></div>
 <?php if (AuthComponent::user('type')) { ?>
 	<div class='delete'>
 		<span class='fui-cross'></span>
