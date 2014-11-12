@@ -8,7 +8,7 @@
 	 class		ProductsController extends AppController {
 
 		private $_Notification;
-		public $uses = array('User', 'Product', 'Website', 'Commentary');
+		public $uses = array('User', 'Product', 'Website', 'Commentary', 'Collection');
 
 		public function		beforeFilter() {
 			parent::beforeFilter();
@@ -20,21 +20,41 @@
 		 * Template: Products/index.ctp
 		 */
 		public function		index() {
+			$menu = array(
+				"search" => array(
+					"class" => "productSearch"
+				)
+			);
 			if (AuthComponent::user('type') != 0) {
 				$result = $this->Product->find('all', array(
 					"conditions" => array(
 						"userId" => AuthComponent::user('id')
 					)
 				));
+				$collections = $this->Collection->find('all', array(
+					"conditions" => array(
+						"userId" => AuthComponent::user('id')
+					)
+				));
+				for ($i = 0; isset($collections[$i]); $i++) {
+					$c = $collections[$i]["Collection"];
+					$menu["mainMenu"]["Collections"][$c["name"]] = array(
+						"/ec/products/viewCollection/$c[id]"
+					);
+				}
 			} else {
 				$result = $this->Product->find('all');
 				for ($i = 0; isset($result[$i]); $i++) {
 				   $u = $this->User->findById($result[$i]["Product"]["userId"]);
 					$result[$i]["Product"]["creator"] = $u["User"]["nickName"];
+					$menu["mainMenu"]["Créateurs"][$u["User"]["nickName"]] = array(
+						"link" => "/ec/products/viewCreator/".$u["User"]["id"]
+					);
 				}
 				$this->set('websites', $this->Website->find('all'));
 			}
 			$this->set("result", $result);
+			$this->set("menu", $menu);
 		}
 
 		/**
@@ -156,6 +176,50 @@
 			if (isset($c[0]))
 				$this->set("comments", $c);
 			$this->set("product", $p);
+		}
+
+		/**
+		 * View Product by Creator
+		 * Template: Products/index.ctp
+		 */
+		public function		viewCreator($id) {
+			if (AuthComponent::user('type') != 0) {
+				$this->Session->setFlash("Pardon ?", 'default', array(), 'bad');
+				$this->redirect("/Products");
+			} else {
+				$result = $this->Product->find('all', array(
+					"conditions" => array(
+						"userId" => $id
+					)
+				));
+				for ($i = 0; isset($result[$i]); $i++) {
+				   $u = $this->User->findById($result[$i]["Product"]["userId"]);
+					$result[$i]["Product"]["creator"] = $u["User"]["nickName"];
+				}
+				$this->set("result", $result);
+				$this->render('index');
+			}
+		}
+
+		/**
+		 * Search product function
+		 * Template: Products/index.ctp
+		 */
+		public function		search($search) {
+			$conditions = array(
+				"name LIKE" => "%$search%"
+			);
+			if (AuthComponent::user('type') != 0)
+				$conditions["userId"] = AuthComponent::user('id');
+			$result = $this->Product->find('all', array(
+				"conditions" => $conditions
+			));
+			for ($i = 0; isset($result[$i]); $i++) {
+				$u = $this->User->findById($result[$i]["Product"]["userId"]);
+				$result[$i]["Product"]["creator"] = $u["User"]["nickName"];
+			}
+			$this->set("result", $result);
+			$this->render('index');
 		}
 	 }
 ?>

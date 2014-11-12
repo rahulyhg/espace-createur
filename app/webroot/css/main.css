@@ -38,6 +38,12 @@
 		margin: 0;
 	}
 
+	.wait {
+		margin-top: 10%;
+		font-size: 2em;
+		text-align: center;
+	}
+
 /*****************/
 /* Notifications */
 /*****************/

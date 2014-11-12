@@ -1,3 +1,7 @@
+<?php
+if (isset($menu))
+	echo $this->element('Menus/main', array("menu" => $menu)); 
+?>
 <div class='messageProducts'></div>
 <?php if (AuthComponent::user('type')) { ?>
 	<div class='delete'>
@@ -28,6 +32,9 @@
 		</ul>
 	<button class='btn btn-success'>Ajouter</button>
 	</div>
+	<div class='selectAll'>
+		<span class='fui fui-loop'></span>
+	</div>
 <?php } ?>
 
 <?php if (AuthComponent::user('type') != 0) { ?>
@@ -35,7 +42,7 @@
 <?php } else { ?>
 	<h1>Créations</h1>
 <?php } ?>
-<div class='product_list'>
+<div class='product_list result'>
 	<?php 
 		echo "<ul>";
 		$product = $result;

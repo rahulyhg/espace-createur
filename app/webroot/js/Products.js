@@ -15,12 +15,86 @@ $(document).ready(function() {
 	$(".websites ul li").on('click', function() {
 		var className = $(this).attr('class');
 		var id = $(this).attr('name');
-		alert(id);
 		if (className == undefined || className == "") {
 			delete websitesChecked[id];
 		} else {
 			websitesChecked[id] = 1;
 		}
+	});
+
+	// Ajax for menu
+	$(".todo ul li ul li").on('click', function() {
+		var link = $(this).find('a');
+		var time;
+		link = link.attr('href');
+		$(".result").html('<div class="wait">Un instant...<br /><i class="fa fa-refresh fa-spin"></i></div>');
+	   $.ajax({
+			url: link,
+			success: function (data, status) {
+				actualHover = 0;
+				actualHoverBox = 0;
+				actualText = 0;
+				boxChecked = {};
+				$(".delete").hide(200);
+				$(".addWebsite").hide(200);
+				$(".websites").hide(200);
+				$(".result").html(data);
+				$(".result h1").remove()
+				$(".messageProducts").remove();
+				$(".result .delete").remove();
+				$(".result .more").remove();
+				$(".result .selectAll").remove();
+				$(".result .addWebsite").remove();
+				$(".result .todo").remove();
+				$(".result .datFade").each(function(i) {
+					time = Math.floor(Math.random() * 100) + 300;
+					$(this).delay(time * i).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
+				});
+			}
+		});
+		return false;
+	});
+
+	// Search ajax
+	$(".productSearch").keyup(function() {
+		name = $(this).val();
+		if (name != "") {
+			$(".result").html('<div class="wait">Un instant...<br /><i class="fa fa-refresh fa-spin"></i></div>');
+			$.ajax({
+				url: "/ec/Products/search/" + name,
+					success: function (data, status) {
+					actualHover = 0;
+						actualHoverBox = 0;
+					actualText = 0;
+					boxChecked = {};
+					$(".delete").hide(200);
+					$(".addWebsite").hide(200);
+					$(".websites").hide(200);
+					$(".result").html(data);
+					$(".result h1").remove()
+					$(".messageProducts").remove();
+					$(".result .delete").remove();
+					$(".result .selectAll").remove();
+					$(".result .more").remove();
+					$(".result .addWebsite").remove();
+					$(".result .todo").remove();
+					$(".result .datFade").each(function(i) {
+						time = Math.floor(Math.random() * 100) + 300;
+						$(this).delay(time * i).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
+					});
+				}
+			});
+		}
+	});
+
+	$(".selectAll").on('click', function() {
+		$(".delete").show(200);
+		$(".addWebsite").show(200);
+		$(".result input").each(function(i) {
+			$(this).prop('checked', true);
+			boxChecked[$(this).val()] = 1;
+			$(this).parent("label").fadeIn(200);
+		});
 	});
 
 	$('.useShortDescription').change(function() {
@@ -30,7 +104,7 @@ $(document).ready(function() {
 			$(".addProduct .shortDescription").hide(300);
 	});
 
-	$('.countCheckBox').change(function() {
+	$(document).on('change', '.countCheckBox', function() {
 		var i = Object.keys(boxChecked).length;
 		if (this.checked)
 			boxChecked[$(this).val()] = 1;
@@ -49,7 +123,7 @@ $(document).ready(function() {
 	});
 
 	// Hover products
-	$(".product_list ul li").mouseover(function () {
+	$(document).on('mouseover', '.product_list ul li', function() {
 		if (actualHover != 0 && actualText != $(this).find('h6').html()) {
 			actualHover.fadeOut(200);
 			if (boxChecked[actualHoverBox.find('input').val()] === undefined ||
@@ -71,7 +145,7 @@ $(document).ready(function() {
 	});
 
 	// Add to a website Action
-	$(".websites button").on('click', function() {
+	$(document).on('click', '.websites button', function() {
 		var i = 0, v = 1;
 			for (key2 in boxChecked) {
 				i++;
@@ -96,7 +170,7 @@ $(document).ready(function() {
 
 $(window).load(function() {
 	var time;
-	$(".datFade").each(function(i) {
+ $(".datFade").each(function(i) {
 		time = Math.floor(Math.random() * 100) + 300;
 		$(this).delay(time * i).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
 	});
