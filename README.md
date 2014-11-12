@@ -68,3 +68,35 @@ Le template utilise est Flat Ui [1], base sur Bootstrap [2].
 [1] [Presentation](http://designmodo.github.io/Flat-UI/) [Examples](http://designmodo.github.io/Flat-UI/docs/components.html)
 
 [2] [Bootstrap](http://getbootstrap.com/css/)
+
+## Menu Navigation:
+
+Le menu de navigation est généré depuis un tableau, passé en paramètre depuis l'appel de l'élément.
+
+```php
+ echo $this->element('Menus/main', array("menu" => $menu));
+```
+
+Le tableau passé en paramètres doit contenir:
+
+```php
+$menu = array(
+ /* Recherche en haut du menu */
+ "search" => array(
+  "class" => "myAwesomeClass", /* Falcutatif */
+  "placeholder" => "Placeholder..." /* Falcutatif */
+ )
+ /* Si "search" => false, le champ de recherche ne sera pas affiché */
+ /* MENU */
+ "mainMenu" => array(
+  /* Nom du menu principal */
+  "menu1" => array(
+   /* Nom du sous menu */
+   "submenu1" => array(
+    /* Lien du sous menu */
+    "link" => "#"
+   )
+  )
+ )
+ );
+```
