@@ -36,11 +36,15 @@
 						"userId" => AuthComponent::user('id')
 					)
 				));
+				$menu["mainMenu"]["Toutes mes créations"] = array("link" => "/ec/Products");
 				for ($i = 0; isset($collections[$i]); $i++) {
 					$c = $collections[$i]["Collection"];
 					$menu["mainMenu"]["Collections"][$c["name"]] = array(
-						"/ec/products/viewCollection/$c[id]"
+						"link" => "/ec/products/viewCollection/$c[id]"
 					);
+				}
+				if ($i == 0) {
+					$menu["mainMenu"]["Collections"]["Pas de collections !"] = array("link" => "#");
 				}
 			} else {
 				$result = $this->Product->find('all');

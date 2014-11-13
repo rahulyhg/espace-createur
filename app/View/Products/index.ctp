@@ -10,6 +10,10 @@ if (isset($menu))
 	<div class='more'>
 		<a href="/ec/Products/add"><span class='fui-plus'></span></a>
 	</div>
+	<div class='selectAll'>
+		<span class='fui fui-loop'></span>
+	</div>
+
 <?php } else { ?>
 	<div class='addWebsite'>
 		<span class='fui-plus'></span>

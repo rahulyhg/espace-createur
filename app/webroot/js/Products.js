@@ -10,6 +10,7 @@ $(document).ready(function() {
 	var		actualHoverBox = 0;
 	var		actualText = 0;
 	var		boxChecked = {};
+	var		selectAll = 0;
 
 	// Fixes on Flat-UI
 	$(".websites ul li").on('click', function() {
@@ -58,10 +59,13 @@ $(document).ready(function() {
 	// Search ajax
 	$(".productSearch").keyup(function() {
 		name = $(this).val();
-		if (name != "") {
+		url = "/ec/Products/search/" + name;
+		if (name == "") {
+			url = "/ec/Products/";
+		}
 			$(".result").html('<div class="wait">Un instant...<br /><i class="fa fa-refresh fa-spin"></i></div>');
 			$.ajax({
-				url: "/ec/Products/search/" + name,
+				url: url,
 					success: function (data, status) {
 					actualHover = 0;
 						actualHoverBox = 0;
@@ -72,6 +76,7 @@ $(document).ready(function() {
 					$(".websites").hide(200);
 					$(".result").html(data);
 					$(".result h1").remove()
+					$(".result .col-xs-2").remove()
 					$(".messageProducts").remove();
 					$(".result .delete").remove();
 					$(".result .selectAll").remove();
@@ -84,17 +89,28 @@ $(document).ready(function() {
 					});
 				}
 			});
-		}
 	});
 
 	$(".selectAll").on('click', function() {
-		$(".delete").show(200);
-		$(".addWebsite").show(200);
-		$(".result input").each(function(i) {
-			$(this).prop('checked', true);
-			boxChecked[$(this).val()] = 1;
-			$(this).parent("label").fadeIn(200);
-		});
+		if (selectAll == 0) {
+			$(".delete").show(200);
+			$(".addWebsite").show(200);
+			$(".result input").each(function(i) {
+				$(this).prop('checked', true);
+				boxChecked[$(this).val()] = 1;
+				$(this).parent("label").fadeIn(200);
+			});
+			selectAll = 1;
+		} else {
+			$(".delete").hide(200);
+			$(".addWebsite").hide(200);
+			$(".result input").each(function(i) {
+				$(this).prop('checked', false);
+				boxChecked[$(this).val()] = 0;
+				$(this).parent("label").fadeOut(200);
+			});
+			selectAll = 0;
+		}
 	});
 
 	$('.useShortDescription').change(function() {
@@ -170,7 +186,7 @@ $(document).ready(function() {
 
 $(window).load(function() {
 	var time;
- $(".datFade").each(function(i) {
+	$(".datFade").each(function(i) {
 		time = Math.floor(Math.random() * 100) + 300;
 		$(this).delay(time * i).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
 	});
