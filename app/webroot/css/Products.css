@@ -22,6 +22,7 @@
 		background: #27ae60;
 		padding: 0 1%;
 		border-radius: 80px;
+		display: none;
 	}
 
 	.delete {
@@ -45,11 +46,17 @@
 		display: none;
 	}
 
-	.websites {
+	.websites, .collections {
 		position: absolute;
 		right: 40px;
 		top: 200px;
 		display: none;
+		z-index: 9999;
+	}
+
+	.collections {
+		width: 300px;
+		top: 200px;
 	}
 
 	.selectAll {
@@ -62,7 +69,7 @@
 		margin-right: 10px;
 	}
 
-	.websites button {
+	.websites button , .collections button {
 		width: 100%;
 	}
 
@@ -110,8 +117,22 @@
 	.product_list ul li .count {
 		float: right;
 		position: absolute;
-		margin-left: 10px;
+		margin-left: 40px;
 		display: none;
+	}
+	
+	.product_list ul li .status {
+		float: right;
+		position: absolute;
+		margin-left: 10px;
+	}
+	
+	.product_list ul li .status .fa-check {
+		color: #27ae60;
+	}
+	
+	.product_list ul li .status .fa-gavel {
+		color: #d35400;
 	}
 
 	.datFade {
@@ -119,16 +140,63 @@
 	}
 
 	.messageProducts {
-		width: 100%;
+		width: 80%;
 		background: #16a085;
 		color: white;
 		padding-left: 50px;
 		padding-bottom: 10px;
 		margin-bottom: 5px;
+		margin-left: 17%;
+		padding-top: 90px;
+		border-radius: 10px;
+		display: none;
 	}
 
 	.messageProducts .fui-check {
 		margin-right: 50px;
+	}
+
+	.subMenu {
+		float: right;
+		padding-left: 20px;
+		margin-right: 3%;
+		text-align: center;
+		margin-bottom: 10px;
+		background: #ecf0f1;
+		border: 1px solid #bdc3c7;
+		border-radius: 10px;
+		padding-top: 10px;
+	}
+
+	.subMenu ul {
+		list-style: none;
+	}
+
+	.subMenu ul li {
+		display: inline;
+		border-right: 1px solid #34495e;
+		padding-right: 20px;
+	}
+	
+	.subMenu ul .last {
+		border: 0;
+	}
+	
+	.subMenu ul li a {
+		color: #2c3e50;
+		font-weight: bold;
+	}
+
+	.subMenu ul li a:hover {
+		color: #2980b9;
+	}
+	
+	.subMenu ul li a .number {
+		color: white;
+		margin-left: 10px;
+		background: #3498db;
+		padding: 0 5px;
+		border-radius: 10px;
 	}
 
 /**************/

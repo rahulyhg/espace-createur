@@ -68,3 +68,37 @@
 	.menuTodo .todo-done {
 		padding-bottom: 0 !important;
 	}
+
+	.dropdownMenu li input {
+		width: 85%;
+		height: 30px;
+		border: 0;
+		padding-left: 10px;
+		border-bottom-left-radius: 10px;
+		border-top-left-radius: 10px;
+		margin-left: 3px;
+		color: #2C3E50;
+	}
+
+	.dropdownMenu li span {
+		width: 20%;
+		background-color: #2C3E50;
+		height: 30px;
+		color: white;
+		font-size: 1.2em;
+		padding-right: 5px;
+		padding-left: 5px;
+		padding-bottom: 8px;
+		padding-top: 4px;
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+	}
+
+	.dropdownMenu li .left {
+		border-radius: 10px;
+		float: right;
+		margin-right: 20px;
+		padding-right: 10px;
+		padding-left: 10px;
+		width: auto;
+	}

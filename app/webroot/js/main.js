@@ -17,17 +17,30 @@ $(document).ready(function () {
 	// Fixes on Flat-UI
 	$(".todo ul li").on('click', function() {
 		var className = $(this).attr('class');
-		if (className == undefined || className == "") {
-			if (current != 0) {
-				current.find('.dropdownMenu').slideUp(200);
-				current.removeClass("todo-done");
+		if ($(this).parent().attr('class') != "dropdownMenu") {
+			if (className == undefined || className == "") {
+				$(this).addClass("todo-done");
+			} else {
+				$(this).removeClass("todo-done");
 			}
-			$(this).addClass("todo-done");
-			$(this).find('.dropdownMenu').slideDown(200);
-			current = $(this);
-		} else {
-			$(this).removeClass("todo-done");
-			$(this).find('.dropdownMenu').slideUp(200);
+		}
+	});
+
+	// Menu
+	$(".menuTodo ul li").on('click', function() {
+		var className = $(this).attr('class');
+		if ($(this).parent().attr('class') != "dropdownMenu") {
+			if (className == "todo-done") {
+				$(this).find('.dropdownMenu').slideDown(200);
+				if (current != 0) {
+					current.find('.dropdownMenu').slideUp(200);
+					current.removeClass("todo-done");
+				}
+				current = $(this);
+			} else {
+				$(this).find('.dropdownMenu').slideUp(200);
+				current = 0;
+			}
 		}
 	});
 

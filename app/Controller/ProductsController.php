@@ -36,18 +36,57 @@
 						"userId" => AuthComponent::user('id')
 					)
 				));
-				$menu["mainMenu"]["Toutes mes créations"] = array("link" => "/ec/Products");
+				$this->set("collections", $collections);
+				$menu["mainMenu"]["Ajouter un produit"] = array("link" => "/ec/Products/add");
+				for ($productOk = 0, $productWait = 0, $i = 0; isset($result[$i]); $i++) {
+					if ($result[$i]["Product"]["status"] == 1)
+						$productWait++;
+					else
+						$productOk++;
+				}
+				$menu["mainMenu"]["Toutes mes créations"] = array(
+					"Toutes" => array(
+						"link" => "/ec/products/",
+						"left" => $productOk + $productWait,
+						"leftClass" => ""
+					),
+					"Créations acceptées" => array(
+						"link" => "/ec/Products/productOk",
+						"left" => $productOk,
+						"leftClass" => ""
+					),
+					"Créations non validées" => array(
+						"link" => "/ec/Products/productWait",
+						"left" => $productWait,
+						"leftClass" => ""
+					)
+				);
+				$menu["mainMenu"]["Collections"]["addCollection"] = array(
+					"input" => true,
+					"class" => "addCollection",
+					"placeholder" => "Ajouter une collection..",
+					"icon" => "fui-plus"
+				);
 				for ($i = 0; isset($collections[$i]); $i++) {
 					$c = $collections[$i]["Collection"];
+					$count = $this->Product->find('count', array(
+						"conditions" => array(
+							"collection" => $c["id"]
+						)
+					));
 					$menu["mainMenu"]["Collections"][$c["name"]] = array(
-						"link" => "/ec/products/viewCollection/$c[id]"
+						"link" => "/ec/products/viewCollection/$c[id]",
+						"left" => $count,
+						"leftClass" => "collectionId$c[id]"
 					);
 				}
-				if ($i == 0) {
-					$menu["mainMenu"]["Collections"]["Pas de collections !"] = array("link" => "#");
-				}
-			} else {
+				} else {
 				$result = $this->Product->find('all');
+				$menu["mainMenu"]["Créations"] = array(
+					"Toutes" => array(
+						"link" => "/ec/products"
+					)
+				);
 				for ($i = 0; isset($result[$i]); $i++) {
 				   $u = $this->User->findById($result[$i]["Product"]["userId"]);
 					$result[$i]["Product"]["creator"] = $u["User"]["nickName"];
@@ -196,11 +235,39 @@
 						"userId" => $id
 					)
 				));
-				for ($i = 0; isset($result[$i]); $i++) {
-				   $u = $this->User->findById($result[$i]["Product"]["userId"]);
-					$result[$i]["Product"]["creator"] = $u["User"]["nickName"];
+				$collection = $this->Collection->find('all', array(
+					"conditions" => array(
+						"userId" => $id
+					)
+				));
+				for ($productSite = array(), $productWait = 0, $productOk = 0, $i = 0; isset($result[$i]); $i++) {
+					$u = $this->User->findById($result[$i]["Product"]["userId"]);
+					$name = $result[$i]["Product"]["creator"] = $u["User"]["nickName"];
+					if ($result[$i]["Product"]["status"] == 1)
+						$productWait++;
+					else
+						$productOk++;
+					if ($result[$i]["Product"]["website"])
+						$productSite[$result[$i]["Product"]["website"]]++;
 				}
+				foreach ($productSite as $key => $value) {
+					$nameSite = $this->Website->findById($key)["Website"]["name"];
+					$productSite[$key] = array(
+						"name" => utf8_encode($nameSite),
+						"count" => $value
+					);
+				}
+				$nav = array(
+					"collections" => $collection,
+					"productWait" => $productWait,
+					"productOk" => $productOk,
+					"productSite" => $productSite
+				);
+				$this->set("nav", $nav);
 				$this->set("result", $result);
+				$this->set("userId", $id);
+				if (isset($name))
+					$this->set("title", $name);
 				$this->render('index');
 			}
 		}
@@ -225,5 +292,90 @@
 			$this->set("result", $result);
 			$this->render('index');
 		}
+
+		/**
+		 * View Collection function
+		 * Template: Products/index.ctp
+		 */
+		public function		viewCollection($id) {
+			$result = $this->Product->find('all', array(
+				"conditions" => array(
+					"userId" => AuthComponent::user('id'),
+					"collection" => $id
+				)
+			));
+			for ($i = 0; isset($result[$i]); $i++) {
+				$u = $this->User->findById($result[$i]["Product"]["userId"]);
+				$result[$i]["Product"]["creator"] = $u["User"]["nickName"];
+			}
+			$this->set("result", $result);
+			$this->set("title", $this->Collection->findById($id)["Collection"]["name"]);
+			$this->render('index');
+		}
+
+		/**
+		 * Validate Product
+		 * Template: Products/index.ctp
+		 */
+		function		productOk($id = 0) {
+			if ($id != 0)
+				$id = AuthComponent::user('id');
+			$result = $this->Product->find('all', array(
+				"conditions" => array(
+					"userId" => $id,
+					"status" => 2
+				)
+			));
+			for ($i = 0; isset($result[$i]); $i++) {
+				$u = $this->User->findById($result[$i]["Product"]["userId"]);
+				$result[$i]["Product"]["creator"] = $u["User"]["nickName"];
+			}
+			$this->set("result", $result);
+			$this->set("title", "Créations acceptées");
+			$this->render('index');
+		}
+
+		/**
+		 * Wait Product
+		 * Template: Products/index.ctp
+		 */
+		function		productWait($id = 0) {
+			if ($id != 0)
+				$id = AuthComponent::user('id');
+			$result = $this->Product->find('all', array(
+				"conditions" => array(
+					"userId" => $id,
+					"status" => 1
+				)
+			));
+			for ($i = 0; isset($result[$i]); $i++) {
+				$u = $this->User->findById($result[$i]["Product"]["userId"]);
+				$result[$i]["Product"]["creator"] = $u["User"]["nickName"];
+			}
+			$this->set("result", $result);
+			$this->set("title", "Créations en attente de Validation");
+			$this->render('index');
+		}
+
+		/**
+		 * view Product by Website
+		 * Template: Products/index.ctp
+		 */
+		function	viewWebsite($userId, $websiteId) {
+			$result = $this->Product->find('all', array(
+				"conditions" => array(
+					"userId" => $userId,
+					"website LIKE" => "%$websiteId%"
+				)
+			));
+			for ($i = 0; isset($result[$i]); $i++) {
+				$u = $this->User->findById($result[$i]["Product"]["userId"]);
+				$result[$i]["Product"]["creator"] = $u["User"]["nickName"];
+			}
+			$this->set("result", $result);
+			$this->set("title", "Créations en attente de Validation");
+			$this->render('index');
+		}
+
 	 }
 ?>

@@ -4,6 +4,7 @@
  */
 
 	var		websitesChecked = {};
+	var		collectionsChecked = {};
 $(document).ready(function() {
 	// Check and Unchecked shortDescription
 	var		actualHover = 0;
@@ -23,38 +24,91 @@ $(document).ready(function() {
 		}
 	});
 
+	$(".collections ul li").on('click', function() {
+		var className = $(this).attr('class');
+		var id = $(this).attr('name');
+		if (className == undefined || className == "") {
+			delete collectionsChecked[id];
+		} else {
+			collectionsChecked[id] = 1;
+		}
+	});
+
 	// Ajax for menu
 	$(".todo ul li ul li").on('click', function() {
 		var link = $(this).find('a');
 		var time;
 		link = link.attr('href');
-		$(".result").html('<div class="wait">Un instant...<br /><i class="fa fa-refresh fa-spin"></i></div>');
-	   $.ajax({
-			url: link,
-			success: function (data, status) {
-				actualHover = 0;
-				actualHoverBox = 0;
-				actualText = 0;
-				boxChecked = {};
-				$(".delete").hide(200);
-				$(".addWebsite").hide(200);
-				$(".websites").hide(200);
-				$(".result").html(data);
-				$(".result h1").remove()
-				$(".messageProducts").remove();
-				$(".result .delete").remove();
-				$(".result .more").remove();
-				$(".result .selectAll").remove();
-				$(".result .addWebsite").remove();
-				$(".result .todo").remove();
-				$(".result .datFade").each(function(i) {
-					time = Math.floor(Math.random() * 100) + 300;
-					$(this).delay(time * i).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
-				});
-			}
-		});
+		if (link != undefined) {
+			$(".result").html('<div class="wait">Un instant...<br /><i class="fa fa-refresh fa-spin"></i></div>');
+		   $.ajax({
+				url: link,
+				success: function (data, status) {
+					actualHover = 0;
+					actualHoverBox = 0;
+					actualText = 0;
+					boxChecked = {};
+					$(".delete").hide(200);
+					$(".addWebsite").hide(200);
+					$(".websites").hide(200);
+				   $(".result").delay(200).fadeOut(600, function() {
+						$(".result").fadeIn(200);
+						$(".result").html(data);
+						$(".result .col-xs-2").remove()
+						$(".result .messageProducts").remove();
+						$(".result .delete").remove();
+						$(".result .more").remove();
+						$(".result .selectAll").remove();
+						$(".result .addWebsite").remove();
+						$(".result .todo").remove();
+						$(".datFade").each(function(i) {
+							time = Math.floor(Math.random() * 1000) + 300;
+							$(this).delay(time).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
+						});
+					});
+				}
+			});
+		}
 		return false;
 	});
+
+	$(document).on('click', ".subMenu ul li a", function() {
+		var link = $(this).attr('href');
+		var time;
+		for (i = 0; $(".result")[i] != undefined; i++)
+			obj = $(".result")[i];
+		if (link != undefined) {
+			$(obj).html('<div class="wait">Un instant...<br /><i class="fa fa-refresh fa-spin"></i></div>');
+		   $.ajax({
+				url: link,
+				success: function (data, status) {
+					actualHover = 0;
+					actualHoverBox = 0;
+					actualText = 0;
+					boxChecked = {};
+					$(".addWebsite").hide(200);
+					$(".websites").hide(200);
+				   $(obj).delay(200).fadeOut(600, function() {
+						$(obj).fadeIn(200);
+						$(obj).html(data);
+						$(".result .col-xs-2").remove()
+						$(".result .messageProducts").remove();
+						$(".result .delete").remove();
+						$(".result .more").remove();
+						$(".result .selectAll").remove();
+						$(".result .addWebsite").remove();
+						$(".result .todo").remove();
+						$(".datFade").each(function(i) {
+							time = Math.floor(Math.random() * 1000) + 300;
+							$(this).delay(time).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
+						});
+					});
+				}
+			});
+		}
+		return false;
+	});
+
 
 	// Search ajax
 	$(".productSearch").keyup(function() {
@@ -68,21 +122,22 @@ $(document).ready(function() {
 				url: url,
 					success: function (data, status) {
 					actualHover = 0;
-						actualHoverBox = 0;
+					actualHoverBox = 0;
 					actualText = 0;
 					boxChecked = {};
 					$(".delete").hide(200);
 					$(".addWebsite").hide(200);
 					$(".websites").hide(200);
-					$(".result").html(data);
-					$(".result h1").remove()
+					$(".result").hide().html(data);
+					//$(".result h1").remove()
 					$(".result .col-xs-2").remove()
-					$(".messageProducts").remove();
+					$(".result .messageProducts").remove();
 					$(".result .delete").remove();
 					$(".result .selectAll").remove();
 					$(".result .more").remove();
 					$(".result .addWebsite").remove();
 					$(".result .todo").remove();
+					$(".result").fadeIn(200);
 					$(".result .datFade").each(function(i) {
 						time = Math.floor(Math.random() * 100) + 300;
 						$(this).delay(time * i).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
@@ -95,6 +150,7 @@ $(document).ready(function() {
 		if (selectAll == 0) {
 			$(".delete").show(200);
 			$(".addWebsite").show(200);
+			$(".more").show(200);
 			$(".result input").each(function(i) {
 				$(this).prop('checked', true);
 				boxChecked[$(this).val()] = 1;
@@ -104,11 +160,14 @@ $(document).ready(function() {
 		} else {
 			$(".delete").hide(200);
 			$(".addWebsite").hide(200);
+			$(".more").hide(200);
+			$(".collections").hide(200);
 			$(".result input").each(function(i) {
 				$(this).prop('checked', false);
 				boxChecked[$(this).val()] = 0;
 				$(this).parent("label").fadeOut(200);
 			});
+			boxChecked = {};
 			selectAll = 0;
 		}
 	});
@@ -130,11 +189,14 @@ $(document).ready(function() {
 		if (i == 0 && v > 0) {
 			$(".delete").show(200);
 			$(".addWebsite").show(200);
+			$(".more").show(200);
 		}
 		else if (i > 0 && v == 0) {
 			$(".delete").hide(200);
 			$(".addWebsite").hide(200);
 			$(".websites").hide(200);
+			$(".more").hide(200);
+			$(".collections").hide(200);
 		}
 	});
 
@@ -160,6 +222,28 @@ $(document).ready(function() {
 		$(".websites").show(200);
 	});
 
+	$(".more").on('click', function() {
+		$(".collections").show(200);
+	});
+
+	// Add to collection button
+	$(document).on('click', '.collections button', function() {
+		$(".messageProducts").html("Ajouts des créations... <i class='fa fa-circle-o-notch fa-spin'></i>").show(200);
+		for (key2 in boxChecked) {
+			for (key in collectionsChecked) {
+				$.ajax({
+					"url": "/ec/Collections/addProduct/"+key2+"/"+key,
+					success: function () {
+						$(".collectionId"+key).html(($(".collectionId"+key).html() * 1) + (1 * 1));
+					}
+				});
+			}
+		}
+		$(".messageProducts").html("Terminé !").show(200);
+		$(".more").hide(200);
+		$(".collections").hide(200);
+	});
+
 	// Add to a website Action
 	$(document).on('click', '.websites button', function() {
 		var i = 0, v = 1;
@@ -182,12 +266,28 @@ $(document).ready(function() {
 		$(".addWebsite").hide(200);
 		$(".websites").hide(200);
 	});
+
+	$(".dropdownMenu li .fui-plus").on('click', function() {
+		value = $(this).parent().find("input").val();
+		url = "/ec/Collections/add/" + value;
+		current = $(this);
+		$(this).parent().find("span").attr("class", "").html('<i class="fa fa-refresh fa-spin"></i>');
+	   $.ajax({
+			url: url,
+			success: function (data, status) {
+				current.parent().find("span").attr("class", "fui-plus").html("");
+				current.parent().find("input").val("");
+				current.parent().parent().append("<li><a href='/ec/Products/viewCollection/"+data+"'>"+value+"</a></li>");
+			}
+		});
+	});
 });
 
 $(window).load(function() {
 	var time;
 	$(".datFade").each(function(i) {
-		time = Math.floor(Math.random() * 100) + 300;
-		$(this).delay(time * i).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
+		time = Math.floor(Math.random() * 1000) + 300;
+		console.log(time);
+		$(this).delay(time).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
 	});
 });

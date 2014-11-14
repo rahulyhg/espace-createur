@@ -30,7 +30,15 @@
 						echo "<ul class='dropdownMenu'>";
 						foreach ($val as $subMenu => $infos) {
 							echo "<li>";
-								echo "<a href='$infos[link]'>$subMenu</a>";
+							if (isset($infos["input"]) && $infos["input"] == 1) {
+								echo "<input type='text' class='$infos[class]' placeholder='$infos[placeholder]'><span class='$infos[icon]'></span>";
+							} else {
+								echo "<a href='$infos[link]'>$subMenu";
+								if (isset($infos["left"])) {
+									echo "<span class='left $infos[leftClass]'>$infos[left]</span>";
+								}
+								echo "</a>";
+							}
 							echo "</li>";
 						}
 						echo "</ul>";
