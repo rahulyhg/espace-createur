@@ -119,9 +119,8 @@ if (isset($menu))
 				</label>';
 				$img = substr(json_decode($p["img"])[0], 8);
 				echo "<img src='$img'><br />";
-				if (AuthComponent::user('type') != 0) {
-				echo "<a href='/ec/Products/edit/$p[id]'><button class='btn btn-success'>Editer</button></a>";
-				}
+				if (AuthComponent::user('type') != 0)
+					echo "<a href='/ec/Products/edit/$p[id]'><button class='btn btn-success'>Editer</button></a>";
 				if (AuthComponent::user('type') == 0)
 					echo "<h6>".$p["name"]."<br/><span class='creator'>".$p["creator"]."</span></h6>";
 				else
@@ -129,7 +128,10 @@ if (isset($menu))
 			echo "</li>";
 		}
 		echo "</ul>";
-		if ($i == 0)
-			echo "Aucune création ! Si c'est vous voulez en ajouter, merci de clique sur le '+'";
+		if ($i == 0) {
+			if (AuthComponent::user('type'))
+				echo "Aucune création ! Si c'est vous voulez en ajouter, merci de clique sur le '+'";
+			echo "Aucune création !";
+		}
 	?>
 </div>

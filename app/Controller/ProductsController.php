@@ -184,7 +184,8 @@
 				$data = array(
 					"description" => $d["description"],
 					"name" => $d["name"],
-					"price" => $d["price"]
+					"price" => $d["price"],
+					"status" => 1
 				);
 				if ($d["img"]["name"] != "") {
 					$file = $d["img"];
@@ -318,7 +319,7 @@
 		 * Template: Products/index.ctp
 		 */
 		function		productOk($id = 0) {
-			if ($id != 0)
+			if ($id == 0)
 				$id = AuthComponent::user('id');
 			$result = $this->Product->find('all', array(
 				"conditions" => array(
@@ -340,7 +341,7 @@
 		 * Template: Products/index.ctp
 		 */
 		function		productWait($id = 0) {
-			if ($id != 0)
+			if ($id == 0)
 				$id = AuthComponent::user('id');
 			$result = $this->Product->find('all', array(
 				"conditions" => array(
