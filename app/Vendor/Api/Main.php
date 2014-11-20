@@ -86,9 +86,10 @@
 		 */
 		public function		sendProduct() {
 			if ($this->_apiType == 1)
-				$this->_sendMagentoProduct();
+				$id = $this->_sendMagentoProduct();
 			else
 				throw new Exception("La technologie demandée n'est pas supportée");
+			return $id;
 		}
 
 		/**
@@ -123,8 +124,9 @@
 			$store = "shop_view";
 			$attribute = 4;
 			$type = 'simple';
-			$this->_product["id"] = $this->_client->call('catalog_product.create', array($type, $attribute, $sku, $data, $store));
+			$id = $this->_product["id"] = $this->_client->call('catalog_product.create', array($type, $attribute, $sku, $data, $store));
 			$this->_addImage();
+			return $id;
 		}
 
 		/**
@@ -134,7 +136,7 @@
 		 	for ($i = 0; isset($this->_product["img"][$i]); $i++) {
 				$result = $this->_client->call('catalog_product_attribute_media.create', array(
 					$this->_product["id"],
-					array(
+				array(
 						"file" => $this->_product["img"][$i],
 						"label" => $this->_product["name"],
 						"position" => 100,
@@ -173,6 +175,17 @@
 					'image' => $name.'.png'
 				)
 			));
+		 }
+
+		 public function	getMagentoSales() {
+			$this->_getMagentoClient();
+			$result = $this->_client->call("order.list");
+			$infos = array();
+			for ($i = 0; isset($result[$i]); $i++) {
+				if ($result[$i]["status"] == "pending")
+					$infos[$i] = $this->_client->call('sales_order.info', array($result[$i]["increment_id"]));
+			}
+			return $infos;
 		 }
 	 }
 ?>

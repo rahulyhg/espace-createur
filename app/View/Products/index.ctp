@@ -130,7 +130,7 @@ if (isset($menu))
 		echo "</ul>";
 		if ($i == 0) {
 			if (AuthComponent::user('type'))
-				echo "Aucune création ! Si c'est vous voulez en ajouter, merci de clique sur le '+'";
+				echo "Aucune création ! Si vous voulez en ajouter, merci de clique sur le '+'";
 			echo "Aucune création !";
 		}
 	?>

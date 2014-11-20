@@ -124,13 +124,21 @@
 				}
 				$product["img"] = $img;
 				$api->addProduct($product);
-				$api->sendProduct();
-				if (!$product["currentWebsite"])
+				$id = $api->sendProduct();
+				if (!$product["website"])
 					$website = $websiteId;
 				else
 					$website .= ",".$websiteId;
+				if (!$product["currentWebsite"]) {
+					$id = json_encode(array($websiteId => $id));
+				} else {
+					$tmp = json_decode($p["currentWebsite"]);
+					$tmp[$websiteId] = $id;
+					$id = json_encode($tmp);
+				}
 				$this->Product->id = $productId;
 				$this->Product->saveField('website', $website);
+				$this->Product->saveField('currentWebsite', $id);
 			}
 		 }
 
