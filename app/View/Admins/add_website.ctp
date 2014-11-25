@@ -1,5 +1,5 @@
 <div class="row">
-	<div class='addWebsite'>
+	<div class='addWebsiteForm'>
 		<div class="col-md-12">
 			<h1>Ajouter un site</h1>
 			<div class='form-group'>
@@ -10,7 +10,7 @@
 				<br />
 				<button class='btn btn-primary' onclick='getInfos()'>Ajouter !</button>
 			</div>
-			<div class='result'></div>
+			<div class='resultWebsite'></div>
 		</div>
 	</div>
 </div>

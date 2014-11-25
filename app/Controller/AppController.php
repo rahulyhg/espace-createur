@@ -56,7 +56,7 @@ class AppController extends Controller {
 	), 'Cookie', 'RequestHandler');
 
 	function beforeFilter() {
-		$this->Auth->allow('*', 'logIn', 'signUp');
+		$this->Auth->allow('*', 'logIn', 'signUp', 'getSales');
 		$this->Auth->userModel = 'User';
 		if ($this->RequestHandler->isAjax())
 			$this->layout = null;
@@ -67,19 +67,30 @@ class AppController extends Controller {
 				"isAdmin" => 1,
 				"isRead" => 0
 			);
+			$salesConditions = array(
+				"status" => 0
+			);
 		} else {
 			$conditions = array(
 				"userId" => AuthComponent::user('id'),
 				"isRead" => 0
 			);
+			$salesConditions = array(
+				"status" => 0,
+				"creatorId" => AuthComponent::user('id')
+			);
 		}
 		if (AuthComponent::user('id') != 0) {
 			$this->loadModel('Notification');
+			$this->loadModel('Sales');
 			$number = $this->Notification->find('count', array(
 				"conditions" => $conditions
 			));
+			$sales = $this->Sales->find('count', array(
+				"conditions" => $salesConditions
+			));
 			$this->set('Notifications', $number);
+			$this->set('Sales', $sales);
 		}
 	}
-
 }

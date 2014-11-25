@@ -34,7 +34,7 @@ class SalesController extends AppController {
 						foreach ($id as $val) {
 							if ($val == $r["items"][$v]["product_id"] ) {
 								$order = $r;
-								$creator = $product[$i]["Product"]["userId"];
+								$creator = $product[$i]["Product"];
 							}
 						}
 					}
@@ -68,7 +68,8 @@ class SalesController extends AppController {
 								"discount" => $r["items"][$v]["base_discount_invoiced"],
 								"shipping_address" => $r["shipping_invoiced"],
 							)),
-							"creatorId" => $creator
+							"creatorId" => $creator["userId"],
+							"productId" => $creator["id"]
 						);
 						$tmp = $this->Sales->find('all', array(
 							"conditions" => array(
@@ -81,6 +82,57 @@ class SalesController extends AppController {
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * Index function
+	 * Template: Sales/index.ctp
+	 */
+	function	index() {
+		if (AuthComponent::user('type')) {
+			$sales = $this->Sales->find('all', array(
+				"conditions" => array(
+					"creatorId" => AuthComponent::user('id')
+				),
+				"limit" => 5,
+				"order" => array(
+					"id DESC"
+				)
+			));
+		} else {
+			$sales = $this->Sales->find('all', array(
+				"conditions" => array(
+					"status" => 0
+				),
+				"limit" => 5,
+				"order" => array(
+					"id DESC"
+				)
+			));
+		}
+		for ($i = 0, $data = array(); isset($sales[$i]); $i++) {
+			$s = $sales[$i]["Sales"];
+			$date = json_decode($s["quoteInfo"], true)["date"];
+			$p = $this->Product->findById($s["productId"]);
+			$sales[$i]["Sales"]["productName"] = $p["Product"]["name"];
+			$sales[$i]["Sales"]["img"] = $p["Product"]["img"];
+			$date = explode('-', explode(' ', $date)[0]);
+			if ($date[0] == date("Y") && $date[1] == date("m")) {
+				if (!isset($data[$date[2]]))
+					$data[$date[2]] = 0;
+				$data[$date[2]] += 1;
+			}
+		}
+		$this->set('sales', $sales);
+		$this->set('data', $data);
+	}
+
+	public	function	changeStatus($salesId, $newStatus) {
+		$product = $this->Sales->findById($salesId);
+		if ($product["Sales"]["creatorId"] == AuthComponent::user('id')) {
+			$this->Sales->id = $salesId;
+			$this->Sales->saveField("status", $newStatus);
 		}
 	}
 }

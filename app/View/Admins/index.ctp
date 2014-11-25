@@ -8,25 +8,17 @@
 	);
 	echo $this->element('Menus/main', array("menu" => $menu));
 ?>
-<div class='adminIndex'>
+<div class='adminIndex result'>
 	<div class="list_summary">
 		<ul>
 			<h1>Websites</h1>
-			<?php foreach($websites as $key => $name) {
-					echo "<li class='admin_home'>";
-					echo "<a href=".$name['link'].">".$key."</a>";
-					echo "</li>";
-				}
-			?>
+			<li><input type="button" name="add_website" value="Ajouter un website"></li>
 		</ul>
 		<ul>
-			<h1>Createurs</h1>
-			<?php foreach($creators as $key => $name) {
-					echo "<li class='admin_home'>";
-					echo "<a href=".$name['link'].">".$key."</a>";
-					echo "</li>";
-				}
-			?>
+				<h1>Dernieres Actions effectuees</h1>
+			<li>
+				<code>en attendant avant de mettre des log j'ecrit nimplol</code>
+			</li>
 		</ul>
 	</div>
 </div>

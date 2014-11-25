@@ -7,13 +7,13 @@
  * Get Information on a website through Ajax
  */
 function	getInfos() {
-	url = $(".addWebsite .url").val();
+	url = $(".addWebsiteForm .url").val();
 	$.ajax({
 		url: "/ec/infos/websiteInfo/" + url,
 		success: function (result, status) {
-			$(".addWebsite .form-group").hide(500);
-			$(".addWebsite button").hide(500);
-			$(".addWebsite .result").html(result).fadeIn(400);
+			$(".addWebsiteFormm .form-group").hide(500);
+			$(".addWebsiteForm button").hide(500);
+			$(".addWebsiteForm .resultWebsite").html(result).fadeIn(400);
 		}
 	});
 }

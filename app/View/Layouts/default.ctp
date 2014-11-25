@@ -38,6 +38,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				'Admins',
 				'Notifications',
 				'Products',
+				'Sales',
 				'//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'
 			));
 
@@ -45,10 +46,12 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			echo $this->Html->script(array(
 				'jquery.min',
 				'flat-ui',
+				'Chart.min',
 				'main',
 				'Admins',
 				'Notifications',
-				'Products'
+				'Products',
+				'Sales'
 			));
 
 		echo $this->fetch('meta');
@@ -77,11 +80,17 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="/ec/Sales/">
 								<?php if (AuthComponent::user('type') != 0) {
 										echo "Mes Ventes";
 									} else {
-										echo "Ventes"; } ?>
+										echo "Ventes"; } 
+									if (isset($Sales) && $Sales != 0) {
+									 	echo '<span class="navbar-new notification-count">';
+										echo $Sales;
+										echo "</span>";
+									}
+								?>
 							</a>
 						</li>
 						<li>

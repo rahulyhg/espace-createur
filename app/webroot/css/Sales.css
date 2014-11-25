@@ -1,0 +1,90 @@
+/**
+ * Sales Controller Style
+ * By: Louis <louis@ne02ptzero.me>
+ */
+
+/*****************************/
+/*      Action: index        */
+/* Template: Sales/index.ctp */
+/*****************************/
+
+.sales ul li {
+	margin-bottom: 5px;
+	color: white;
+	border: 0;
+	list-style: none;
+}
+
+.sales .main {
+	margin-left: 18%;
+}
+
+.sales ul .status0 {
+	background: #2980b9;
+}
+
+.sales ul .status1 {
+	background: #f39c12;
+}
+
+.sales ul .status2 {
+	background: #16a085;
+}
+
+.sales ul li .right {
+	float: right;
+	margin-right: 10px;
+}
+
+.sales ul .details {
+	text-align: center;
+	color: black;
+	display: none;
+}
+
+.sales ul .details h5 {
+	text-align: center;
+
+}
+
+.sales ul .details address .fa-at {
+	background: #2c3e50;
+	color: #ecf0f1;
+	padding: 4px;
+}
+
+.sales ul .details ul li {
+	display: inline-table;
+	color: black;
+	vertical-align: top;
+	width: 30%;
+}
+
+.sales ul .details ul li img {
+	height: 200px;
+	width: auto;
+	margin-right: 20px;
+}
+
+.sales ul .details ul .pic {
+	margin-right: 100px;
+}
+
+.sales ul .details ul .pic ul li {
+	width: auto;
+	text-align:left;
+}
+
+.sales ul .details button {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.sales ul .details button i {
+	font-size: 1.2em;
+	margin-right: 10px;
+}
+
+#salesStats {
+	margin-left: 22%;
+}

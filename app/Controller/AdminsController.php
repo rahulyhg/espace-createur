@@ -38,6 +38,7 @@
 				$w = $websites[$i]["Website"];
 				$websitesResult[utf8_encode($w["name"])] = array("link" => "/ec/Website/edit/$w[id]");
 			}
+			$websitesResult["Ajouter un site"] = array("link" => "/ec/Admins/addWebsite");
 			$this->set('creators', $creatorResult);
 			$this->set('websites', $websitesResult);
 		}
