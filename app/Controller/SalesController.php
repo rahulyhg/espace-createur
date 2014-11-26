@@ -135,5 +135,21 @@ class SalesController extends AppController {
 			$this->Sales->saveField("status", $newStatus);
 		}
 	}
+
+	public function		details($id) {
+		$s = $this->Sales->findById($id);
+		if (AuthComponent::user('id') != $s["Sales"]["creatorId"] && AuthComponent::user('type')) {
+			$this->redirect("/sales");
+		} else {
+			$s = $s["Sales"];
+			foreach ($s as $n => $v) {
+				if ($n == "clientInfo" || $n == "addressInfo" || $n == "quoteInfo" || $n == "priceInfo")
+					$s[$n] = json_decode($v, true);
+			}
+			$p = $this->Product->findById($s["productId"]);
+			$this->set("product", $p["Product"]);
+			$this->set("sales", $s);
+		}
+	}
 }
 ?>

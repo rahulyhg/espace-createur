@@ -31,7 +31,7 @@ if (isset($menu))
 	</div>
 
 <?php } else { ?>
-	<div class='addWebsite'>
+	<div class='addWebsite more'>
 		<span class='fui-plus'></span>
 	</div>
 	<div class='websites todo'>

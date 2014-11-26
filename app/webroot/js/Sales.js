@@ -37,5 +37,15 @@ $(document).ready(function() {
 			current = $(this);
 		}
 	});
-
+	$(document).on('click', ".moreInfo", function() {
+		url = $(this).attr('href');
+		$(".result").html('<div class="wait">Un instant...<br /><i class="fa fa-refresh fa-spin"></i></div>');
+		$.ajax({
+			url: url,
+			success: function(data, status) {
+				$(".result").html(data);
+			}
+		});
+		return false;
+	});
 });

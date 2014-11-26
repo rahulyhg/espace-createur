@@ -34,11 +34,14 @@
 
 			// Get Websites
 			$websites = $this->Website->find('all');
+			$websitesResult["Ajouter un site"] = array(
+				"link" => "/ec/Admins/addWebsite",
+				"leftClass" => "fui-plus"
+			);
 			for ($i = 0; isset($websites[$i]); $i++) {
 				$w = $websites[$i]["Website"];
 				$websitesResult[utf8_encode($w["name"])] = array("link" => "/ec/Website/edit/$w[id]");
 			}
-			$websitesResult["Ajouter un site"] = array("link" => "/ec/Admins/addWebsite");
 			$this->set('creators', $creatorResult);
 			$this->set('websites', $websitesResult);
 		}

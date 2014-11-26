@@ -42,7 +42,7 @@ var data = {
 ?>
 ],
 	    datasets: [
-		        {
+				{
 				label: "Ventes",
 				fillColor: "#34495e",
 				strokeColor: "rgba(220,220,220,1)",
@@ -112,7 +112,7 @@ var data = {
 							echo "<button class='btn btn-success' onclick='changeStatus(\"".$s['id']."\",\"".($s['status'] + 1)."\", this)'><i class='fa fa-truck'></i> Passer en terminée</button>";
 						}
 					}
-					echo "<button class='btn btn-info'><i class='fa fa-info'></i> Voir les détails</button>";
+					echo "<a class='moreInfo' href='/ec/sales/details/$s[id]'><button class='btn btn-info'><i class='fa fa-info'></i> Voir les détails</button></a>";
 					echo "<button class='btn btn-primary'><i class='fa fa-file-pdf-o'></i>Voir la Facture</button>";
 			echo "</li>";
 		}
