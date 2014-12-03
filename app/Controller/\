@@ -117,40 +117,17 @@
 		  */
 		 public function	edit() {
 			if ($this->request->is('post')) {
-				$d = $this->request->data["user"];
+				$d = $this->request->data;
 				print_r($d);
-				$infos = array();
-				$pass = $this->User->findById(AuthComponent::user('id'))["User"]["password"];
-				if ($d["oldPass"] != "") {
-					$d["oldPass"] = Security::hash($d["oldPass"], null, true);
-					if ($d["oldPass"] != $pass)
+				if ($oldPass != "") {
+					$oldPass = Security::hash($oldPass, null, true);
+					if ($oldPass != AuthComponent::user('password')) {
 						$this->Session->setFlash("Le mot de passe actuel ne correspond pas.", 'default', array(), 'bad');
-					else if ($d["newPass1"] != $d["newPass2"])
-						$this->Session->setFlash("Le nouveau mot de passe ne correspond pas", 'default', array(), 'bad');
-					else
-						$d["password"] = Security::hash($d["newPass1"]);
+					}
 				}
-				if ($d["img"]["size"] != 0) {
-					// Upload the file
-					$path = $_SERVER['DOCUMENT_ROOT'] .'/ec/app/webroot/files/'.AuthComponent::user('id');
-					if (is_dir($path) == false)
-						mkdir($path);
-					move_uploaded_file($d["img"]['tmp_name'], $path."/".$d["img"]["name"]);
-					$infos["img"] = array(
-						0 => $path."/".$d["img"]["name"]
-					);
-				}
-				$infos["address"] = array(
-					"street" => $d["infosStreet"],
-					"city" => $d["infosCity"],
-					"postal" => $d["infosPostal"]
-				);
-				$d["infos"] = json_encode($infos);
-				$this->User->id = AuthComponent::user('id');
-				$this->User->save($d);
 			}
 			$infos = $this->User->findById(AuthComponent::user('id'));
-			$infos["User"]["infos"] = json_decode($infos["User"]["infos"], true);
+			$infos["User"]["infos"] = json_decode($infos["User"]["info"], true);
 			$this->set("infos", $infos);
 		 }
 	}

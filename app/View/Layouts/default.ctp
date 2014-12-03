@@ -108,7 +108,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							<a href="#">
+							<a href="/ec/users/edit">
 								Mon Compte <span class="fui-user"></span>
 							</a>
 						</li>

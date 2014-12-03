@@ -105,3 +105,11 @@
 	.content_spe h1 {
 		text-align: center;
 	}
+
+/*****************/
+/* Flat UI fixes */
+/*****************/
+
+	.input-group-addon {
+		background: #7f8c8d;
+	}

@@ -113,7 +113,7 @@ var data = {
 						}
 					}
 					echo "<a class='moreInfo' href='/ec/sales/details/$s[id]'><button class='btn btn-info'><i class='fa fa-info'></i> Voir les détails</button></a>";
-					echo "<button class='btn btn-primary'><i class='fa fa-file-pdf-o'></i>Voir la Facture</button>";
+					echo "<a href='/ec/factures/view/$s[id]' target='_blank'><button class='btn btn-primary'><i class='fa fa-file-pdf-o'></i>Voir la Facture</button></a>";
 			echo "</li>";
 		}
 
