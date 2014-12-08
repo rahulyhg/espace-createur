@@ -105,6 +105,11 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 								?>
 							</a>
 						</li>
+						<li>
+							<a href="/ec/Tickets">
+								Tickets
+							</a>
+						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li>

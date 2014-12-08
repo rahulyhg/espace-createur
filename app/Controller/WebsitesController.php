@@ -6,6 +6,12 @@
 
 	 class		WebsitesController extends AppController {
 
+		public function		beforeFilter() {
+			parent::beforeFilter();
+			if (AuthComponent::user('type'))
+				$this->redirect("/");
+		}
+
 	 	/**
 		 * Add a Website function
 		 */
@@ -18,6 +24,20 @@
 					$this->redirect("/admins");
 				}
 			}
+		}
+
+		/**
+		 * Edit a website function
+		 * Template: Websites/edit.ctp
+		 */
+		function	edit($id) {
+			if ($this->request->is('post')) {
+				$d = $this->request->data["edit"];
+				$this->Website->id = $id;
+				$this->Website->save($d);
+			}
+			$website = $this->Website->findById($id);
+			$this->set("infos", $website["Website"]);
 		}
 	 }
 ?>

@@ -40,7 +40,7 @@
 			);
 			for ($i = 0; isset($websites[$i]); $i++) {
 				$w = $websites[$i]["Website"];
-				$websitesResult[utf8_encode($w["name"])] = array("link" => "/ec/Website/edit/$w[id]");
+				$websitesResult[utf8_encode($w["name"])] = array("link" => "/ec/Websites/edit/$w[id]");
 			}
 			$this->set('creators', $creatorResult);
 			$this->set('websites', $websitesResult);

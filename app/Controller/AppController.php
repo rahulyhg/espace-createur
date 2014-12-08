@@ -56,7 +56,7 @@ class AppController extends Controller {
 	), 'Cookie', 'RequestHandler');
 
 	function beforeFilter() {
-		$this->Auth->allow('*', 'logIn', 'signUp', 'getSales');
+		$this->Auth->allow('*', 'logIn', 'signUp', 'getSales', 'forgotPassword');
 		$this->Auth->userModel = 'User';
 		if ($this->RequestHandler->isAjax())
 			$this->layout = null;

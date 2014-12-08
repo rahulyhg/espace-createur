@@ -115,7 +115,7 @@
 		 /**
 		  * Edit profile
 		  */
-		 public function	edit() {
+		 public function	edit($id = 0) {
 			if ($this->request->is('post')) {
 				$d = $this->request->data["user"];
 				print_r($d);
@@ -128,7 +128,7 @@
 					else if ($d["newPass1"] != $d["newPass2"])
 						$this->Session->setFlash("Le nouveau mot de passe ne correspond pas", 'default', array(), 'bad');
 					else
-						$d["password"] = Security::hash($d["newPass1"]);
+						$d["password"] = Security::hash($d["newPass1"], null, true);
 				}
 				if ($d["img"]["size"] != 0) {
 					// Upload the file
@@ -149,9 +149,36 @@
 				$this->User->id = AuthComponent::user('id');
 				$this->User->save($d);
 			}
-			$infos = $this->User->findById(AuthComponent::user('id'));
+			if ($id != 0 && AuthComponent::user('type') == 0) {
+				$infos = $this->User->findById($id);
+			} else {
+				$infos = $this->User->findById(AuthComponent::user('id'));
+			}
 			$infos["User"]["infos"] = json_decode($infos["User"]["infos"], true);
 			$this->set("infos", $infos);
+		 }
+
+		 /**
+		  * Forgot password function
+		  */
+		 function forgotPassword() {
+			if ($this->request->is('post')) {
+				$mail = $this->request->data["forgot"]["email"];
+				$u = $this->User->find('all', array(
+					"conditions" => array(
+						"email" => $mail
+					)
+				));
+				if ($u[0]["User"]["id"] && $u[0]["User"]["id"] != 0) {
+					// Mail thing
+					$this->Session->setFlash("Vous allez recevoir votre nouveau mot de passe par mail !", array(), 'default', 'good');
+					$password = Security::hash("password", null, true);
+					$this->User->id = $u[0]["User"]["id"];
+					$this->User->saveField('password', $password);
+				} else {
+					$this->Session->setFlash("Aucun compte avec cet email !", array(), 'default', 'bad');
+				}
+			}
 		 }
 	}
 ?>

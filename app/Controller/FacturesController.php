@@ -35,9 +35,9 @@ class FacturesController extends AppController {
 			PDF_begin_page_ext($p, 595, 842, "");
 			$fontTitle = PDF_load_font($p, "Helvetica-Bold", "winansi", "");
 			$font = PDF_load_font($p, "Helvetica", "winansi", "");
-			PDF_setfont($p, $fontTitle, 24.0);
-			PDF_set_text_pos($p, 80, 800);
-			PDF_show($p, "Facture");
+			PDF_set_text_pos($p, 40, 800);
+			PDF_setfont($p, $font, 12.0);
+			PDF_show($p, "YAY");
 			PDF_end_page_ext($p, "");
 			PDF_end_document($p, "");
 			$buf = PDF_get_buffer($p);

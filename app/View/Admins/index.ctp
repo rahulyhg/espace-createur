@@ -2,6 +2,7 @@
 	$menu = array(
 		"search" => false,
 		"mainMenu" => array(
+			"Accueil" => array(),
 			"Sites" => $websites,
 			"Créateurs" => $creators
 		)
