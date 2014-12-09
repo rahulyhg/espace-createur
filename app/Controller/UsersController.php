@@ -118,12 +118,15 @@
 		 public function	edit($id = 0) {
 			if ($this->request->is('post')) {
 				$d = $this->request->data["user"];
-				print_r($d);
 				$infos = array();
 				$pass = $this->User->findById(AuthComponent::user('id'))["User"]["password"];
-				if ($d["oldPass"] != "") {
-					$d["oldPass"] = Security::hash($d["oldPass"], null, true);
-					if ($d["oldPass"] != $pass)
+				if ((isset($d["oldPass"]) && $d["oldPass"] != "") || (!AuthComponent::user('type') && isset($d["newPass1"]))) {
+					// Nasty fix for treatment errors
+					if (isset($d["oldPass"]))
+						$d["oldPass"] = Security::hash($d["oldPass"], null, true);
+					else
+						$d["oldPass"] = NULL;
+					if ($d["oldPass"] != $pass && AuthComponent::user('type'))
 						$this->Session->setFlash("Le mot de passe actuel ne correspond pas.", 'default', array(), 'bad');
 					else if ($d["newPass1"] != $d["newPass2"])
 						$this->Session->setFlash("Le nouveau mot de passe ne correspond pas", 'default', array(), 'bad');
@@ -146,7 +149,10 @@
 					"postal" => $d["infosPostal"]
 				);
 				$d["infos"] = json_encode($infos);
-				$this->User->id = AuthComponent::user('id');
+				if ($id != 0 && AuthComponent::user('type') == 0)
+					$this->User->id = $id;
+				else
+					$this->User->findById(AuthComponent::user('id'));
 				$this->User->save($d);
 			}
 			if ($id != 0 && AuthComponent::user('type') == 0) {

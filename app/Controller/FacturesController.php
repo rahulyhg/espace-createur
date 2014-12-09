@@ -6,7 +6,7 @@
 
 class FacturesController extends AppController {
 
-	public $uses = array("Sales", "Product");
+	public $uses = array("Sales", "Product", "Users");
 
 	public function view($salesId = 0) {
 
@@ -16,6 +16,8 @@ class FacturesController extends AppController {
 			&& $salesId != 0) {
 			$product = $this->Product->findById($sales["productId"])["Product"];
 			$s = $sales;
+			$user = $this->Users->findById($product["userId"])["Users"];
+			$infos = json_decode($user["infos"], true);
 			foreach ($s as $n => $v) {
 				if ($n == "clientInfo" || $n == "addressInfo" || $n == "quoteInfo" || $n == "priceInfo")
 					$s[$n] = json_decode($v, true);
@@ -35,9 +37,20 @@ class FacturesController extends AppController {
 			PDF_begin_page_ext($p, 595, 842, "");
 			$fontTitle = PDF_load_font($p, "Helvetica-Bold", "winansi", "");
 			$font = PDF_load_font($p, "Helvetica", "winansi", "");
-			PDF_set_text_pos($p, 40, 800);
-			PDF_setfont($p, $font, 12.0);
-			PDF_show($p, "YAY");
+			// PDF Header
+				PDF_set_text_pos($p, 40, 800);
+				PDF_setfont($p, $font, 12.0);
+				PDF_show($p, $user["firstName"]." ".$user["lastName"]);
+				PDF_continue_text($p, $infos["address"]["street"]);
+				PDF_continue_text($p, $infos["address"]["postal"].", ".$infos["address"]["city"]);
+				PDF_continue_text($p, $user["email"]);
+			// Title
+				PDF_set_text_pos($p, 170, 700);
+				PDF_setfont($p, $fontTitle, 22.0);
+				PDF_show($p, $product["name"]);
+
+			// Table
+				//PDF_add_table_cell($p, 0, 1, 1, "lol", nell);
 			PDF_end_page_ext($p, "");
 			PDF_end_document($p, "");
 			$buf = PDF_get_buffer($p);

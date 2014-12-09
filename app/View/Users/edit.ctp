@@ -39,14 +39,16 @@
 			)) ?>
 		</div>
 		<h3>Mot de passe</h3>
-		<div class='form-group'>
-			<?php echo $this->Form->input('oldPass', array(
-				"class" => "form-control",
-				"placeholder" => "Mot de passe actuel",
-				"label" => false,
-				"type" => "password"
-			)) ?>
-		</div>
+		<?php if (AuthComponent::user('type')) { ?>
+			<div class='form-group'>
+				<?php echo $this->Form->input('oldPass', array(
+					"class" => "form-control",
+					"placeholder" => "Mot de passe actuel",
+					"label" => false,
+					"type" => "password"
+				)) ?>
+			</div>
+		<?php } ?>
 		<div class='form-group'>
 			<?php echo $this->Form->input('newPass1', array(
 				"class" => "form-control",

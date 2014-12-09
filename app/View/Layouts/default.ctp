@@ -105,16 +105,16 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 								?>
 							</a>
 						</li>
-						<li>
-							<a href="/ec/Tickets">
-								Tickets
-							</a>
-						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li>
 							<a href="/ec/users/edit">
 								Mon Compte <span class="fui-user"></span>
+							</a>
+						</li>
+						<li>
+							<a href="/ec/Tickets">
+								Tickets <span class="fa fa-ticket"></span>
 							</a>
 						</li>
 						<?php if (AuthComponent::user('type') == 0) { ?>
