@@ -128,6 +128,9 @@ class SalesController extends AppController {
 		$this->set('data', $data);
 	}
 
+	/**
+	 * Change the status of the command
+	 */
 	public	function	changeStatus($salesId, $newStatus) {
 		$product = $this->Sales->findById($salesId);
 		if ($product["Sales"]["creatorId"] == AuthComponent::user('id')) {
@@ -136,6 +139,10 @@ class SalesController extends AppController {
 		}
 	}
 
+	/**
+	 * Sales details function
+	 * Template: Sales/details.ctp
+	 */
 	public function		details($id) {
 		$s = $this->Sales->findById($id);
 		if (AuthComponent::user('id') != $s["Sales"]["creatorId"] && AuthComponent::user('type')) {
@@ -149,6 +156,70 @@ class SalesController extends AppController {
 			$p = $this->Product->findById($s["productId"]);
 			$this->set("product", $p["Product"]);
 			$this->set("sales", $s);
+		}
+	}
+
+	/**
+	 * Export function
+	 * Template: Sales/export.ctp
+	 */
+	public function		export($type = 0) {
+		$sales = $this->Sales->find('all', array(
+			"conditions" => array(
+				"creatorId" => AuthComponent::user('id')
+			)
+		));
+
+		$d = $this->request->data;
+		if (isset($d["date"])) {
+			$type = 4;
+			$requestDate[0] = explode("-", $d["date"]["date1"]);
+			$requestDate[1] = explode("-", $d["date"]["date2"]);
+		}
+		for ($i = 0; isset($sales[$i]["Sales"]); $i++) {
+			$date = json_decode($sales[$i]["Sales"]["quoteInfo"], true);
+			$date = explode('-', $date["date"]);
+			$date[2] = explode(' ', $date[2])[0];
+			if ($type == 2 && $date[1] == date('m')) {
+				$result[] = $sales[$i]["Sales"];
+			} else if ($type == 3 && $date[2] == date('d')) {
+				$result[] = $sales[$i]["Sales"];
+			} else if ($type == 1) {
+				$result[] = $sales[$i]["Sales"];
+			} else if ($type == 4) {
+				if ($date[1] >= $requestDate[0][1]) {
+					if ($date[1] == $requestDate[0][1]) {
+						if ($date[2] >= $requestDate[0][2])
+							$result[] = $sales[$i]["Sales"];
+					} else {
+						if ($date[1] <= $requestDate[1][1]) {
+							if ($date[1] == $requestDate[1][1]) {
+								if ($date[2] <= $requestDate[1][2])
+									$result[] = $sales[$i]["Sales"];
+							} else {
+								$result[] = $sales[$i]["Sales"];
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (isset($result)) {
+			echo "orderId,productId,productName,qty,date,price,firstName,lastName,email,shippingFirstName,shippingLastName,street,city,zip,country\n";
+			foreach ($result as $r) {
+				$address = json_decode($r["addressInfo"], true);
+				$clientInfo = json_decode($r["clientInfo"], true);
+				$quote = json_decode($r["quoteInfo"], true);
+				$price = json_decode($r["priceInfo"], true);
+				$product = $this->Product->findById($r["productId"])["Product"];
+				echo '"'.$r["orderId"].'","'.$product["id"].'","'.$product["name"].'","'.$quote["qty"].'","'.$quote["date"].'","'.$product["price"].'","'.$clientInfo["firstName"].'","'.$clientInfo["lastName"].'","'.$clientInfo["email"].'", "'.$address["firstName"].'", "'.$address["lastName"].'","'.$address["street"].'", "'.$address["city"].'", "'.$address["postCode"].'", "'.$address["country"].'"'."\n";
+			}
+			header("Content-type: text/csv");
+			header("Content-Disposition: attachment; filename=ventes(".date("m-d_h:m").").csv");
+			header("Pragma: no-cache");
+			header("Expires: 0");
+			die(0);
 		}
 	}
 }

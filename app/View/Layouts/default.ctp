@@ -39,6 +39,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				'Notifications',
 				'Products',
 				'Sales',
+				'Calendar',
 				'//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'
 			));
 
@@ -51,7 +52,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 				'Admins',
 				'Notifications',
 				'Products',
-				'Sales'
+				'Sales',
+				'Calendar'
 			));
 
 		echo $this->fetch('meta');
@@ -144,7 +146,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		}
 		?>
 
-<?= $this->Session->flash(); ?>
+			<?= $this->Session->flash(); ?>
 			<?php if (($message = $this->Session->flash('good'))) {
 					echo "<div class='notify notify-good'>";
 						echo "<span class='fui-check-circle'></span>";

@@ -19,6 +19,11 @@
 				"Statistiques de Ventes" => array(
 					"link" => "#"
 				)
+			),
+			"Exports" => array(
+				"Ventes" => array(
+					"link" => "/ec/Sales/export"
+				)
 			)
 		)
 	);

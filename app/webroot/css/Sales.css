@@ -16,7 +16,7 @@
 }
 
 .sales .main {
-	margin-left: 18%;
+	/*margin-left: 18%;*/
 }
 
 .sales ul .status0 {
@@ -86,7 +86,7 @@
 }
 
 #salesStats {
-	margin-left: 22%;
+	/*margin-left: 22%;*/
 }
 
 /*******************************/
@@ -123,4 +123,28 @@
 	width: 70%;
 	margin-right: 15%;
 	margin-left: 15%;
+}
+
+/******************************/
+/*      Action: export        */
+/* Template: Sales/export.ctp */
+/******************************/
+
+.export ul li {
+	display: inline-block;
+	color: #2c3e50;
+	margin-right: 30px;
+}
+
+.export .input {
+	margin-top: 3%;
+}
+
+.export .input li {
+	display: inline;
+}
+
+.export .input input {
+	width: 100%;
+	color: black;
 }

@@ -1,4 +1,4 @@
-<div class="col-xs-2">
+<div class="col-xs-2" style="height: 100%">
 	<div class="todo menuTodo">
 		<?php
 			// Search form
