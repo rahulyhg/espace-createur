@@ -172,9 +172,14 @@ class SalesController extends AppController {
 
 		$d = $this->request->data;
 		if (isset($d["date"])) {
-			$type = 4;
-			$requestDate[0] = explode("-", $d["date"]["date1"]);
-			$requestDate[1] = explode("-", $d["date"]["date2"]);
+			if (strcmp($d["date"]["date1"], $d["date"]["date2"]) < 1) {
+				$this->Session->setFlash("Mauvaises dates.", 'default', array(), 'bad');
+				$this->redirect("/Sales");
+			} else {
+				$type = 4;
+				$requestDate[0] = explode("-", $d["date"]["date1"]);
+				$requestDate[1] = explode("-", $d["date"]["date2"]);
+			}
 		}
 		for ($i = 0; isset($sales[$i]["Sales"]); $i++) {
 			$date = json_decode($sales[$i]["Sales"]["quoteInfo"], true);
@@ -220,6 +225,10 @@ class SalesController extends AppController {
 			header("Pragma: no-cache");
 			header("Expires: 0");
 			die(0);
+		}
+		if ($type != 0) {
+			$this->Session->setFlash("Aucune ventes trouvées !", 'default', array(), 'bad');
+			$this->redirect("/Sales");
 		}
 	}
 }

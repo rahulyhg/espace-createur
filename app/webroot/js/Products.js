@@ -53,14 +53,19 @@ $(document).ready(function() {
 					$(".websites").hide(200);
 				   $(".result").delay(200).fadeOut(600, function() {
 						$(".result").fadeIn(200);
-						$(".result").html(data);
-						$(".result .col-xs-2").remove()
-						$(".result .messageProducts").remove();
-						$(".result .delete").remove();
-						$(".result .more").remove();
-						$(".result .selectAll").remove();
-						$(".result .addWebsite").remove();
-						$(".result .todo").remove();
+						//$(document).find(".result").eq(0).html(data);
+						obj = $("<div/>").html(data);
+						if (obj.find(".result").html() == undefined)
+							$(document).find(".result").eq(0).html(data);
+						else
+							$(document).find(".result").eq(0).html(obj.find(".result").html());
+					   /* $(".result .col-xs-2").remove()*/
+						//$(".result .messageProducts").remove();
+						//$(".result .delete").remove();
+						//$(".result .more").remove();
+						//$(".result .selectAll").remove();
+						//$(".result .addWebsite").remove();
+						/*$(".result .todo").remove();*/
 						$(".datFade").each(function(i) {
 							time = Math.floor(Math.random() * 1000) + 300;
 							$(this).delay(time).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
@@ -75,8 +80,8 @@ $(document).ready(function() {
 	$(document).on('click', ".subMenu ul li a", function() {
 		var link = $(this).attr('href');
 		var time;
-		for (i = 0; $(".result")[i] != undefined; i++)
-			obj = $(".result")[i];
+		for (i = 0; $(".result .subContent")[i] != undefined; i++)
+			obj = $(".result .subContent")[i];
 		if (link != undefined) {
 			$(obj).html('<div class="wait">Un instant...<br /><i class="fa fa-refresh fa-spin"></i></div>');
 		   $.ajax({
@@ -88,16 +93,10 @@ $(document).ready(function() {
 					boxChecked = {};
 					$(".addWebsite").hide(200);
 					$(".websites").hide(200);
-				   $(obj).delay(200).fadeOut(600, function() {
+					$(obj).delay(200).fadeOut(600, function() {
 						$(obj).fadeIn(200);
-						$(obj).html(data);
-						$(".result .col-xs-2").remove()
-						$(".result .messageProducts").remove();
-						$(".result .delete").remove();
-						$(".result .more").remove();
-						$(".result .selectAll").remove();
-						$(".result .addWebsite").remove();
-						$(".result .todo").remove();
+						obj = $("<div/>").html(data);
+						$(document).find(".result .subContent").eq(0).html(obj.find(".result").html());
 						$(".datFade").each(function(i) {
 							time = Math.floor(Math.random() * 1000) + 300;
 							$(this).delay(time).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);

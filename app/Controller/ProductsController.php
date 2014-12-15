@@ -256,8 +256,12 @@
 						$productWait++;
 					else
 						$productOk++;
-					if ($result[$i]["Product"]["website"])
-						$productSite[$result[$i]["Product"]["website"]]++;
+					if (isset($result[$i]["Product"]["website"])) {
+						if (isset($productSite[$result[$i]["Product"]["website"]]))
+							$productSite[$result[$i]["Product"]["website"]]++;
+						else
+							$productSite[$result[$i]["Product"]["website"]] = 1;
+					}
 				}
 				foreach ($productSite as $key => $value) {
 					$nameSite = $this->Website->findById($key)["Website"]["name"];

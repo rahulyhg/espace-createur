@@ -17,6 +17,20 @@
 $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
 $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 ?>
+<!--
+Espace Créateurs, 2014 Under MIT License.
+https://github.com/Ne02ptzero/espace-createur
+
+███████╗███████╗██████╗  █████╗  ██████╗███████╗     ██████╗██████╗ ███████╗ █████╗ ████████╗███████╗██╗   ██╗██████╗ ███████╗
+██╔════╝██╔════╝██╔══██╗██╔══██╗██╔════╝██╔════╝    ██╔════╝██╔══██╗██╔════╝██╔══██╗╚══██╔══╝██╔════╝██║   ██║██╔══██╗██╔════╝
+█████╗  ███████╗██████╔╝███████║██║     █████╗      ██║     ██████╔╝█████╗  ███████║   ██║   █████╗  ██║   ██║██████╔╝███████╗
+██╔══╝  ╚════██║██╔═══╝ ██╔══██║██║     ██╔══╝      ██║     ██╔══██╗██╔══╝  ██╔══██║   ██║   ██╔══╝  ██║   ██║██╔══██╗╚════██║
+███████╗███████║██║     ██║  ██║╚██████╗███████╗    ╚██████╗██║  ██║███████╗██║  ██║   ██║   ███████╗╚██████╔╝██║  ██║███████║
+╚══════╝╚══════╝╚═╝     ╚═╝  ╚═╝ ╚═════╝╚══════╝     ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
+                                                                                                                              
+
+Louis <louis@ne02ptzero.me>
+-->
 <!DOCTYPE html>
 <html>
 <head>
@@ -148,12 +162,18 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 			<?= $this->Session->flash(); ?>
 			<?php if (($message = $this->Session->flash('good'))) {
-					echo "<div class='notify notify-good'>";
+					echo "<div class='notify notify-good ";
+					if (!AuthComponent::user('id'))
+						echo "noLogin";
+					echo "'>";
 						echo "<span class='fui-check-circle'></span>";
 						echo $message;
 					echo "</div>";
 				} if (($message = $this->Session->flash('bad'))) {
-					echo "<div class='notify notify-bad'>";
+					echo "<div class='notify notify-bad ";
+					if (!AuthComponent::user('id'))
+						echo "noLogin";
+					echo "'>";
 						echo "<span class='fui-cross-circle'></span>";
 						echo $message;
 					echo "</div>";

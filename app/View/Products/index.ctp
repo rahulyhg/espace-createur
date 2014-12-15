@@ -56,6 +56,7 @@ if (isset($menu))
 		<span class='fa fa-check-square'></span>
 	</div>
 <?php } 
+echo "<div class='product_list result'>";
 			if (isset($nav)) {
 				echo "<div class='subMenu'>";
 					echo "<ul>";
@@ -86,7 +87,7 @@ if (isset($menu))
 			}
 
 ?>
-<div class='product_list result'>
+<div class='subContent'>
 	<?php	if (isset($title)) {
 				echo "<h1>$title</h1>";
 			} else { ?>
@@ -134,4 +135,5 @@ if (isset($menu))
 			echo "Aucune création !";
 		}
 	?>
+	</div>
 </div>

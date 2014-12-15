@@ -20,7 +20,7 @@
 
 $(document).ready(function() {
 	var current = 0;
-	$(".sales .status").on('click', function() {
+	$(document).on('click', ".sales .status", function() {
 		var next = 0;
 		if (current != 0) {
 			$(current).next().slideUp(200);

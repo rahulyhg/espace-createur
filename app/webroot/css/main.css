@@ -57,7 +57,7 @@
 	}
 
 	.result {
-		padding-left: 250px;
+		padding-left: 220px;
 	}
 
 /*****************/
@@ -65,7 +65,7 @@
 /*****************/
 
 	.notify {
-		margin-left: 16px;
+		margin-left: 223px;
 		margin-right: 16px;
 		font-size: 1.3em;
 		color: white;
@@ -74,7 +74,8 @@
 		border-bottom-right-radius: 15px;
 		position: fixed;
 		top: 53px;
-		width: 100%;
+		width: 86%;
+		z-index: 9999;
 	}
 
 	.notify span {
@@ -100,6 +101,13 @@
 
 	.notify-bad span {
 		color: #c0392b;
+	}
+
+	.noLogin {
+		position: relative;
+		margin-left: 82px;
+		border-radius: 9px;
+		margin-bottom: -30px;
 	}
 
 /*************************/
