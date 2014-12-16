@@ -53,19 +53,11 @@ $(document).ready(function() {
 					$(".websites").hide(200);
 				   $(".result").delay(200).fadeOut(600, function() {
 						$(".result").fadeIn(200);
-						//$(document).find(".result").eq(0).html(data);
 						obj = $("<div/>").html(data);
 						if (obj.find(".result").html() == undefined)
 							$(document).find(".result").eq(0).html(data);
 						else
 							$(document).find(".result").eq(0).html(obj.find(".result").html());
-					   /* $(".result .col-xs-2").remove()*/
-						//$(".result .messageProducts").remove();
-						//$(".result .delete").remove();
-						//$(".result .more").remove();
-						//$(".result .selectAll").remove();
-						//$(".result .addWebsite").remove();
-						/*$(".result .todo").remove();*/
 						$(".datFade").each(function(i) {
 							time = Math.floor(Math.random() * 1000) + 300;
 							$(this).delay(time).css({'opacity': 0, 'display': "inline-table"}).animate({'opacity': 1}, 500);
@@ -127,7 +119,8 @@ $(document).ready(function() {
 					$(".delete").hide(200);
 					$(".addWebsite").hide(200);
 					$(".websites").hide(200);
-					$(".result").hide().html(data);
+					obj = $("<div/>").html(data);
+					$(document).find(".result").eq(0).html(obj.find(".result").html());
 					//$(".result h1").remove()
 					$(".result .col-xs-2").remove()
 					$(".result .messageProducts").remove();

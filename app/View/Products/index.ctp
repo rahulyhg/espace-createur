@@ -84,6 +84,7 @@ echo "<div class='product_list result'>";
 
 					echo "</ul>";
 				echo "</div>";
+				echo "<div style='height: 20px;'></div>";
 			}
 
 ?>

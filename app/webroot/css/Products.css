@@ -16,12 +16,11 @@
 /*****************/
 
 	.more {
-		float: right;
-		font-size: 2em;
+		position: fixed;
+		font-size: 1.8em;
 		color: white;
-		background: #27ae60;
-		padding: 0 1%;
-		border-radius: 80px;
+		bottom: 10px;
+		left: 141px;
 		display: none;
 	}
 
@@ -41,11 +40,11 @@
 	}
 
 	.websites, .collections {
-		position: absolute;
-		right: 40px;
-		top: 200px;
+		position: fixed;
 		display: none;
 		z-index: 9999;
+		bottom: -20px;
+		left: 217px;
 	}
 
 	.collections {
@@ -54,13 +53,11 @@
 	}
 
 	.selectAll {
-		float: right;
+		position: fixed;
 		font-size: 2em;
 		color: white;
-		background: #8e44ad;
-		padding: 0 1%;
-		border-radius: 80px;
-		margin-right: 10px;
+		bottom: 10px;
+		padding-left: 14px;
 	}
 
 	.websites button , .collections button {
@@ -151,15 +148,17 @@
 	}
 
 	.subMenu {
-		float: right;
-		padding-left: 20px;
-		margin-right: 3%;
+		position: fixed;
 		text-align: center;
 		margin-bottom: 10px;
 		background: #ecf0f1;
 		border: 1px solid #bdc3c7;
 		border-radius: 10px;
 		padding-top: 10px;
+		top: 53px;
+		left: 218px;
+		right: 0;
+		z-index: 9999;
 	}
 
 	.subMenu ul {
