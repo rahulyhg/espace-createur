@@ -1,0 +1,13 @@
+/**
+ * Users Style
+ * By: Louis <louis@ne02ptzero.me>
+ */
+
+/*******************************/
+/*      Action: Welcome        */
+/* Template: Users/welcome.ctp */
+/*******************************/
+
+.welcome h1, .welcome h6 {
+	display: none;
+}

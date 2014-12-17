@@ -1,5 +1,5 @@
 <div class='notifications'>
-	<h1>Notifications</h1>
+	<h1 class='popOver10'>Notifications</h1>
 	<nav class="navbar navbar-default">
 		<div class='collapse navbar-collapse'>
 			<ul class="navbar-nav nav">

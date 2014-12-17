@@ -31,7 +31,9 @@
 ?>
 <div class='sales result'>
 	<h1 style='text-align: center'>Mes Ventes</h1>
-	<canvas id='salesStats' width="500" height="300"></canvas>
+	<center>
+	<canvas class='popOver9' id='salesStats' width="500" height="300"></canvas>
+	</center>
 	<script>
 var data = {
     labels: [

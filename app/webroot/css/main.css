@@ -140,3 +140,16 @@
 	.input-group-addon {
 		background: #7f8c8d;
 	}
+
+	.popover {
+		min-width: 200px !important;
+	}
+	
+	.popover button {
+		margin-left: 27px;
+		margin-top: 5px;
+	}
+	
+	.popover button i {
+		margin-left: 5px;
+	}

@@ -1,0 +1,6 @@
+[submodule "Flat-Ui"]
+	path = ./app/webroot/css/Flat-UI
+	url = https://github.com/designmodo/Flat-UI.git
+[submodule "php-github-api"]
+	path = ./app/Controller/php-github-api
+	url = https://github.com/KnpLabs/php-github-api.git

@@ -50,10 +50,12 @@ Louis <louis@ne02ptzero.me>
 				'Infos',
 				'Menus',
 				'Admins',
+				'Tickets',
 				'Notifications',
 				'Products',
 				'Sales',
 				'Calendar',
+				'Users',
 				'//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'
 			));
 
@@ -67,7 +69,9 @@ Louis <louis@ne02ptzero.me>
 				'Notifications',
 				'Products',
 				'Sales',
-				'Calendar'
+				'Calendar',
+				'Users',
+				'Tour'
 			));
 
 		echo $this->fetch('meta');
@@ -75,6 +79,12 @@ Louis <louis@ne02ptzero.me>
 		echo $this->fetch('script');
 	?>
 	<meta charset="utf-8">
+<?php
+	if (isset($_GET['tour'])) {
+		echo "<script>$(document).ready(function() {tour();});</script>";
+	}
+?>
+
 </head>
 <body>
 	<div id="container">
@@ -83,12 +93,12 @@ Louis <louis@ne02ptzero.me>
 			<nav class="navbar navbar-inverse navbar-embossed" role="navigation">
 				<div class="navbar-header">
 					<button class="navbar-toggle" data-target="#navbar-collapse-01" data-toggle="collapse" type="button"></button>
-					<a href="/ec" class='navbar-brand'>Espace Créateurs</a>
+					<a href="/ec" class='navbar-brand popOver0'>Espace Créateurs</a>
 				</div>
 				<div class="collapse navbar-collapse" id="navbar-collapse-01">
 					<ul class="nav navbar-nav navbar-left">
 						<li>
-							<a href="/ec/Products">
+							<a class='popOver1' href="/ec/Products">
 							<?php if (AuthComponent::user('type') != 0) {
 										echo "Mes Créations";
 									} else {
@@ -96,7 +106,7 @@ Louis <louis@ne02ptzero.me>
 							</a>
 						</li>
 						<li>
-							<a href="/ec/Sales/">
+							<a href="/ec/Sales/" class='popOver2'>
 								<?php if (AuthComponent::user('type') != 0) {
 										echo "Mes Ventes";
 									} else {
@@ -110,7 +120,7 @@ Louis <louis@ne02ptzero.me>
 							</a>
 						</li>
 						<li>
-							<a href="/ec/Notifications/index/read">
+							<a href="/ec/Notifications/index/read" class='popOver3'>
 								Notifications
 								<?php
 								 if (isset($Notifications) && $Notifications != 0) {
@@ -124,12 +134,12 @@ Louis <louis@ne02ptzero.me>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							<a href="/ec/users/edit">
+							<a href="/ec/users/edit" class='popOver4'>
 								Mon Compte <span class="fui-user"></span>
 							</a>
 						</li>
 						<li>
-							<a href="/ec/Tickets">
+							<a href="/ec/Tickets" class='popOver5'>
 								Tickets <span class="fa fa-ticket"></span>
 							</a>
 						</li>
@@ -141,11 +151,11 @@ Louis <louis@ne02ptzero.me>
 						</li>
 						<?php } ?>
 						<li>
-							<a href="/ec/infos/git">
+							<a href="/ec/infos/git" class='popOver6'>
 								A propos <span class="fui-link"></span>
 							</a>
 						<li>
-							<a href="/ec/users/logOut">
+							<a href="/ec/users/logOut" class='popOver11'>
 								Déconnexion <span class="fui-power"></span>
 							</a>
 						</li>

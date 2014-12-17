@@ -23,7 +23,7 @@
 						echo "<a href='#'>".$name;
 						echo "<span class='fui fui-triangle-down'></span>";
 					} else {
-						echo "<a href='$val[link]'>$name";
+						echo "<a href='$val[link]' class='$val[class]'>$name";
 					}
 					echo "</a>";
 					if (!isset($val["link"])) {

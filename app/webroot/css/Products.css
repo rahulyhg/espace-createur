@@ -25,18 +25,25 @@
 	}
 
 	.delete {
-		float: right;
-		font-size: 2em;
+		position: fixed;
+		font-size: 1.8em;
 		color: white;
-		background: #c0392b;
-		padding: 0 1%;
-		border-radius: 80px;
-		margin-left: 10px;
 		display: none;
+		bottom: 8px;
+		left: 151px;
 	}
 
 	.addWebsiteForm {
 		width: 80%;
+	}
+
+	.actionBackground {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 217px;
+		height: 83px;
+		background: #3498db;
 	}
 
 	.websites, .collections {
@@ -49,7 +56,7 @@
 
 	.collections {
 		width: 300px;
-		top: 200px;
+		bottom: -19px;
 	}
 
 	.selectAll {
@@ -58,6 +65,14 @@
 		color: white;
 		bottom: 10px;
 		padding-left: 14px;
+	}
+
+	.speSelectAll {
+		left: 8px;
+	}
+
+	.speMore {
+		left: 86px;
 	}
 
 	.websites button , .collections button {
@@ -138,7 +153,6 @@
 		padding-bottom: 10px;
 		margin-bottom: 5px;
 		margin-left: 17%;
-		padding-top: 90px;
 		border-radius: 10px;
 		display: none;
 	}

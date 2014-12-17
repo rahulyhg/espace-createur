@@ -2,12 +2,13 @@
 if (isset($menu))
 	echo $this->element('Menus/main', array("menu" => $menu)); 
 ?>
+<div class='actionBackground'></div>
 <div class='messageProducts'></div>
 <?php if (AuthComponent::user('type')) { ?>
 	<div class='delete'>
 		<span class='fui-cross'></span>
 	</div>
-	<div class='more'>
+	<div class='more speMore'>
 		<span class='fui-plus'></span>
 	</div>
 	<div class='collections todo'>
@@ -26,7 +27,7 @@ if (isset($menu))
 		</ul>
 	<button class='btn btn-success'>Ajouter</button>
 	</div>
-	<div class='selectAll'>
+	<div class='selectAll speSelectAll popOver8'>
 		<span class='fa fa-check-square'></span>
 	</div>
 

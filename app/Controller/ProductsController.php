@@ -37,7 +37,7 @@
 					)
 				));
 				$this->set("collections", $collections);
-				$menu["mainMenu"]["Ajouter un produit"] = array("link" => "/ec/Products/add");
+				$menu["mainMenu"]["Ajouter un produit"] = array("link" => "/ec/Products/add", "class" => "popOver7");
 				for ($productOk = 0, $productWait = 0, $i = 0; isset($result[$i]); $i++) {
 					if ($result[$i]["Product"]["status"] == 1)
 						$productWait++;
@@ -77,7 +77,7 @@
 					$menu["mainMenu"]["Collections"][$c["name"]] = array(
 						"link" => "/ec/products/viewCollection/$c[id]",
 						"left" => $count,
-						"leftClass" => "collectionId$c[id]"
+						"leftClass" => "collectionId$c[id]",
 					);
 				}
 				} else {

@@ -9,4 +9,5 @@
 
 <div class="ticketIndex">
 	<h1>Ticket</h1>
+	<div>while ticket de l'user,afficher ticket</div>
 </div>

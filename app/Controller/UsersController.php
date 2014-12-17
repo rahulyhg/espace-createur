@@ -62,6 +62,8 @@
 					$this->User->id = $this->Auth->user('id');
 					if ($this->Auth->user('isConfirmed') == 1) {
 						$this->User->saveField('lastLoginDate', date(DATE_ATOM));
+						if (AuthComponent::user('firstConnection') == 0)
+							$this->redirect('/Users/welcome');
 						$this->Session->setFlash("Bienvenue ".$this->Auth->user('firstName')."!", 'default', array(), 'good');
 						$this->redirect('/');
 					} else {
@@ -186,5 +188,36 @@
 				}
 			}
 		 }
+
+		 /**
+		  * Welcome function
+		  * Template: Users/welcome.ctp
+		  */
+		function 	welcome() {
+			if ($this->request->is('post')) {
+				$d = $this->request->data["Form"];
+				if ($d["img"]["size"] != 0) {
+					// Upload the file
+					$path = $_SERVER['DOCUMENT_ROOT'] .'/ec/app/webroot/files/'.AuthComponent::user('id');
+					if (is_dir($path) == false)
+						mkdir($path);
+					move_uploaded_file($d["img"]['tmp_name'], $path."/".$d["img"]["name"]);
+					$infos["img"] = array(
+						0 => $path."/".$d["img"]["name"]
+					);
+				}
+				$infos["address"] = array(
+					"street" => $d["infosStreet"],
+					"city" => $d["infosCity"],
+					"postal" => $d["infosPostal"]
+				);
+				$d["infos"] = json_encode($infos);
+				$this->User->id = AuthComponent::user('id');
+				if (($this->User->saveField('infos', $d["infos"]))) {
+					$this->User->saveField('firstConnection', 1);
+					$this->redirect("/?tour");
+				}
+			}
+		}
 	}
 ?>

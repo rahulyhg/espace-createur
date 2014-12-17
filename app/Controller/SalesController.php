@@ -115,13 +115,15 @@ class SalesController extends AppController {
 			$s = $sales[$i]["Sales"];
 			$date = json_decode($s["quoteInfo"], true)["date"];
 			$p = $this->Product->findById($s["productId"]);
-			$sales[$i]["Sales"]["productName"] = $p["Product"]["name"];
-			$sales[$i]["Sales"]["img"] = $p["Product"]["img"];
-			$date = explode('-', explode(' ', $date)[0]);
-			if ($date[0] == date("Y") && $date[1] == date("m")) {
-				if (!isset($data[$date[2]]))
-					$data[$date[2]] = 0;
-				$data[$date[2]] += 1;
+			if (isset($p["Product"])) {
+				$sales[$i]["Sales"]["productName"] = $p["Product"]["name"];
+				$sales[$i]["Sales"]["img"] = $p["Product"]["img"];
+				$date = explode('-', explode(' ', $date)[0]);
+				if ($date[0] == date("Y") && $date[1] == date("m")) {
+					if (!isset($data[$date[2]]))
+						$data[$date[2]] = 0;
+					$data[$date[2]] += 1;
+				}
 			}
 		}
 		$this->set('sales', $sales);
